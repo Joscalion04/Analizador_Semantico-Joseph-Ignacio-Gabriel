@@ -5,5 +5,9 @@ import Analisis
 
 lineas = Lectura.read("Codigo.txt")
 for linea in lineas: 
-    print(linea)
+    words = Lectura.separateWords(linea)
+    for word in words: 
+        print(word)
+
+
 
