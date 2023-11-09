@@ -2,12 +2,14 @@
 import Lectura
 import Analisis
 
-
-lineas = Lectura.read("Codigo.txt")
+print(Analisis.tipoDato('void', None))
+"""
+lineas = Lectura.read("Codigo.txt") 
 for linea in lineas: 
     words = Lectura.separateWords(linea)
     for word in words: 
-        print(word)
+        print(Analisis.tipoDato(word))
+"""
 
 
 

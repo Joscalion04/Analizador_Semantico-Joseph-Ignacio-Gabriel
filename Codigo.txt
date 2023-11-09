@@ -1,3 +1,6 @@
-Este es un texto de pruebas
-PARA LA FUNCIONALIDAD DEL ARCHIVO
-Y LECTURA
+void funcion(){
+    int x = 2022
+    string Y
+    float flota
+    return x
+}
