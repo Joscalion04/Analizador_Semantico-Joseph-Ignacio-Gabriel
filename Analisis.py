@@ -2,6 +2,8 @@
 
 
 tiposDatos = {'int' :(int,), 'float':(float,), 'string': (str,), 'void':(type(None),) }
+diccionarioGen = {}
+
 def tipoDato(word,dato): 
     
     if word in tiposDatos and isinstance(dato, tiposDatos[word]): 
@@ -35,12 +37,26 @@ def validateString(word):
     else:
         return False
 
-def agrega(): 
-    tiposDatos["probando"] = ("x","y")
+def addVariableGen(name,type,value): 
+    diccionarioGen[name]= ("var",type,value)
+# [0] es para "var", [1] para el tipo de variable, [2] para el valor que almacena 
+def addFunctionGen(name,type): 
+    diccionarioGen[name] = ("fun",type, {})
+#[0] es para "fun", [1] para tipo de funcion, [2] para subdiccionario donde se almacenan variables locales
+
+def addVarFunction(nameFun, nameVar, type, value): 
+    diccionarioGen[nameFun][2][nameVar]= (type,value)
+
+def addReturnVal(nameFun, value): 
     
-def probando(): 
-    return tiposDatos
-#def sameType(var1, var2):
+
+
+addFunctionGen("prueba1", "int")
+print(diccionarioGen)
+
+print(diccionarioGen["prueba1"][2]["return"])
+
+
      
 
     
