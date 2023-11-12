@@ -33,7 +33,8 @@ funcion={}
 funcion["sumar"]=(10,10) #asi agregamos funciones 
 funcion["resta"]=(10,2)
 datos ["funcion"] = funcion
-print(datos["funcion"]["resta"][1]) #asi se accede a un dato dentro de una posicion 
+#print(datos["funcion"]["resta"][1]) #asi se accede a un dato dentro de una posicion 
+
 
 
 

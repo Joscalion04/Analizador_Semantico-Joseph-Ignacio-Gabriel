@@ -35,7 +35,11 @@ def validateString(word):
     else:
         return False
 
+def agrega(): 
+    tiposDatos["probando"] = ("x","y")
     
+def probando(): 
+    return tiposDatos
 #def sameType(var1, var2):
      
 
