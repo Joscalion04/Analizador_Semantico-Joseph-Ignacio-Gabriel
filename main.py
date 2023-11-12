@@ -22,17 +22,18 @@ for linea in lineas:
             prev = None
 
 """
-try: 
-    float(dato)
-    text = True
-except ValueError: 
-    text =  False
 
-if text == True: 
-    print("funcionando")
-else: 
-    print("no funciona")
 
+#Asi se agregan elementos en el diccionario 
+datos = {}     
+datos["x"] = (int, "122")  #asi agregamos variables 
+datos["y"] = (float, "122.5")
+
+funcion={}
+funcion["sumar"]=(10,10) #asi agregamos funciones 
+funcion["resta"]=(10,2)
+datos ["funcion"] = funcion
+print(datos["funcion"]["resta"][1]) #asi se accede a un dato dentro de una posicion 
 
 
 
