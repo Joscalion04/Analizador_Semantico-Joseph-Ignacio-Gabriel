@@ -48,13 +48,13 @@ def addVarFunction(nameFun, nameVar, type, value):
     diccionarioGen[nameFun][2][nameVar]= (type,value)
 
 def addReturnVal(nameFun, value): 
-    
+    diccionarioGen[nameFun][2]["return"]= (diccionarioGen[nameFun][1],value)
 
-
+addVariableGen("x","float","112.5")
 addFunctionGen("prueba1", "int")
+addVarFunction("prueba1", "x", "int","225")
+addReturnVal("prueba1", "559955")
 print(diccionarioGen)
-
-print(diccionarioGen["prueba1"][2]["return"])
 
 
      
