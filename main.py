@@ -2,11 +2,11 @@
 import Lectura
 import Analisis
 
-dato = None
-prev = None
+dato = ""
+prev = "213a"
 text = None
 
-
+"""
 lineas = Lectura.read("Codigo.txt") 
 for linea in lineas: 
     words = Lectura.separateWords(linea)
@@ -21,6 +21,17 @@ for linea in lineas:
             dato = None
             prev = None
 
+"""
+try: 
+    float(dato)
+    text = True
+except ValueError: 
+    text =  False
+
+if text == True: 
+    print("funcionando")
+else: 
+    print("no funciona")
 
 
 

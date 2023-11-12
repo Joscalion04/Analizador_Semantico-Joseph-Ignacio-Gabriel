@@ -15,5 +15,21 @@ def isTipo(word):
     else:  
         return False
 
-def transform(word, dato): 
+def validateInt(value): 
+    try: 
+        int(value)
+        return True
+    except ValueError: 
+        return False
+
+def validateFloat(value): 
+    try: 
+        float(value)
+        return True
+    except ValueError: 
+        return False
+    
+#def sameType(var1, var2):
+     
+
     
