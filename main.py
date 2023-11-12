@@ -35,24 +35,8 @@ funcion["resta"]=(10,2)
 datos ["funcion"] = funcion
 #print(datos["funcion"]["resta"][1]) #asi se accede a un dato dentro de una posicion 
 
-def KeyEnDiccionario(word,dic):
-    if word in dic:
-        print("Si esta")
-    else: 
-        print("No esta")
-
-
-def ValorEnDiccionario(word):
-    if  diccionarioGen[word][0] == "var":
-        return  diccionarioGen[word][2]
-    if  diccionarioGen[word][0] == "fun":
-        return 
-
-def funEnDiccionario(funName,):
 
 
 
-KeyEnDiccionario("funcion",datos)
-KeyEnDiccionario("sumar",funcion)
 
 

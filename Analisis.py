@@ -50,12 +50,25 @@ def addVarFunction(nameFun, nameVar, type, value):
 def addReturnVal(nameFun, value): 
     diccionarioGen[nameFun][2]["return"]= (diccionarioGen[nameFun][1],value)
 
+def KeyEnDiccionario(word):
+    if word in diccionarioGen:
+        return True
+    else: 
+        return False
+
+
+def ValorEnDiccionario(key):
+    return  diccionarioGen[key][2]
+    
+def valorFuncionEnDiccionario(funName,key):
+    return diccionarioGen[funName][2][key][1]
+
 addVariableGen("x","float","112.5")
 addFunctionGen("prueba1", "int")
 addVarFunction("prueba1", "x", "int","225")
 addReturnVal("prueba1", "559955")
 print(diccionarioGen)
-
+print(valorFuncionEnDiccionario("prueba1","return"))
 
      
 
