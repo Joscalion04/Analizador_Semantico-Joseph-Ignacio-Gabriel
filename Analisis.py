@@ -29,6 +29,13 @@ def validateFloat(value):
     except ValueError: 
         return False
     
+def validateString(word):
+    if word[len(word)-1] == '"' and word[0]=='"':
+        return True
+    else:
+        return False
+
+    
 #def sameType(var1, var2):
      
 
