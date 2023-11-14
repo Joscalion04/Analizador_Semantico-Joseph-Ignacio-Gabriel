@@ -76,8 +76,8 @@ def dataIdentifyWithParenthesis(text):
     if resultado:
         dataType = resultado.group(1)
         dataName = resultado.group(2)
-        dataValue = resultado.group(3)
-        return dataType,dataName,dataValue
+        parameters = resultado.group(3)
+        return dataType,dataName,parameters
     else:
         return None
     
