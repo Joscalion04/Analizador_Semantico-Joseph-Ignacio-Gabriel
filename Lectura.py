@@ -27,3 +27,15 @@ def dataIdentify(text):
         return dataType,dataName,dataValue
     else:
         return None
+
+
+ 
+# tipo nombre =  valor     //1  nueva variable
+# nombre = valor           //2   variable = valor
+# nombre = nombre         //3     variable = variable 
+# tipo nombre (           //4     nueva funcion 
+# (tipo nombre, tipo nombre)  //5 parametros
+# } //6 cierre de funcion 
+
+
+
