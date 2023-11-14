@@ -71,7 +71,6 @@ def dataIdentifyWithParenthesis(text):
 
     dataType = ""
     dataName = ""
-    dataValue = ""
     resultado = re.search(patron, text)
     if resultado:
         dataType = resultado.group(1)
