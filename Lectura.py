@@ -38,4 +38,27 @@ def dataIdentify(text):
 # } //6 cierre de funcion 
 
 
+def dataIdentifyWithParenthesis(text):
+    patron = r"(\w+)\s+(\w+)\s+\((.*)\)"
 
+    dataType = ""
+    dataName = ""
+    dataValue = ""
+    resultado = re.search(patron, text)
+    if resultado:
+        dataType = resultado.group(1)
+        dataName = resultado.group(2)
+        dataValue = resultado.group(3)
+        return dataType,dataName,dataValue
+    else:
+        return None
+    
+
+
+text = "int a (int x, int y ) "
+
+dataType, dataName, dataValue = dataIdentifyWithParenthesis(text)
+
+print(dataType)
+print(dataName)
+print(dataValue)
