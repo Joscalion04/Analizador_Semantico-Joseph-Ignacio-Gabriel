@@ -35,7 +35,11 @@ funcion["resta"]=(10,2)
 datos ["funcion"] = funcion
 #print(datos["funcion"]["resta"][1]) #asi se accede a un dato dentro de una posicion 
 
-
+linea = "double a = 12.3 "
+dato, nombre, valor = Lectura.dataIdentify(linea)
+print("El tipo de dato es:" + dato)
+print("El nombre de la variable es: "+ nombre)
+print("El valor es: "+valor)
 
 
 
