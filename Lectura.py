@@ -70,7 +70,6 @@ def dataIdentifyWithParenthesis(text): #5 con parte del 6
     patron = r"(\w+)\s+(\w+)\s+\((.*)\)"
     dataType = ""
     dataName = ""
-    dataValue = ""
     resultado = re.search(patron, text)
     if resultado:
         dataType = resultado.group(1)
