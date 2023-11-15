@@ -1,5 +1,5 @@
 #Analisis Semantico
-
+import re
 
 tiposDatos = {'int' :(), 'float':(), 'string': (), 'void':() }
 diccionarioGen = {}
@@ -27,15 +27,26 @@ def validateInt(value):
         return False
 
 def validateFloat(value): 
-    try: 
+    try:
         float(value)
-        return True
-    except ValueError: 
+    except ValueError:
         return False
+    else:
+        return float(value) != int(float(value))
     
 def validateString(word):
     if word[len(word)-1] == '"' and word[0]=='"':
         return True
+    else:
+        return False
+
+def validateGeneral(tipo, valor):
+    if tipo == "int": 
+        return validateInt(valor)
+    elif tipo == "float": 
+        return validateFloat(valor)
+    elif tipo == "string":
+        return validateString(valor)
     else:
         return False
 
@@ -66,6 +77,6 @@ def TipoValFuncionEnDiccionario(funName,key):
     return diccionarioGen[funName][2][key][1]
 
 
-     
+
 
     
