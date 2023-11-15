@@ -23,34 +23,29 @@ def separateWords(text):
 # }                            //7 cierre de funcion 
 
 def dataIdentifyTypeToNameToValue(text): #1
-
-        patron = r"(\w+)\s+(\w+)\s+=\s+(.+)"
-        dataValue = ""
-        dataType = ""
-        resultado = re.search(patron, text)
-        if resultado:
-            dataType = resultado.group(1)
-            dataName = resultado.group(2)
-            dataValue = resultado.group(3)
-            return dataType,dataName,dataValue, "1"
+    patron = r"(\w+)\s+(\w+)\s+=\s+(.+)"
     
-
-    
+    dataValue = ""
+    dataType = ""
+    resultado = re.search(patron, text)
+    if resultado:
+        dataType = resultado.group(1)
+        dataName = resultado.group(2)
+        dataValue = resultado.group(3)
+        return dataType,dataName,dataValue, 1
+    else:
+        return None
 
 def dataIdentifyTypeToName(text): #2
-    
-    try:
-        if len(text.split()) != 2:
-            raise ValueError("Invalid number of words. Expected 2.")
-        patron = r"(\w+)\s+(\w+)+?"
-        resultado = re.search(patron, text)
-        if resultado:
-            dataType = resultado.group(1)
-            dataName = resultado.group(2)
-            return dataType, dataName, "2"
-    except Exception: 
-        return None 
-    
+    patron = r"(\w+)\s+(\w+)"
+    resultado = re.search(patron, text)
+    if resultado:
+        dataType = resultado.group(1)
+        dataName = resultado.group(2)
+        return dataType, dataName, 2
+    else:
+        return None
+
 def dataIdentifyNameToValue(text): #3
     patron = r"(\w+)\s+=\s+(.+)"
     resultado = re.search(patron, text)
@@ -97,8 +92,8 @@ print(dataType)
 print(dataName)
 print(dataValue)
 
-linea2 = "string a = 2"
-tipo2, nombre2, proceso = dataIdentifyTypeToName(linea2)
+linea2 = "string a"
+tipo2, nombre2 = dataIdentifyTypeToName(linea2)
 print("\nDATA IDENTIFY 2")
 print("Tipo: "+ tipo2)
 print("Nombre: "+ nombre2)
@@ -115,3 +110,19 @@ print("\nDATA IDENTIFY 4")
 print("Var 1: "+ variable1)
 print("Var 2: "+ variable2)
 """
+def variablesDeLasFunciones(text):
+    parameters=[]
+    line = text
+    line=line.replace(",",'')
+    lines = text.split('\n')
+    lineWords = line.split(' ')
+    word=""
+    for line in lineWords:  
+            word=line
+            if word !='':
+                parameters.append(word)
+    return parameters
+        
+        
+parametros=variablesDeLasFunciones(" int x , int y , string p , string c ")
+print(parametros)
