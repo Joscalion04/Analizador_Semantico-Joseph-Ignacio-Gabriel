@@ -1,6 +1,4 @@
-void funcion(){
     int x = 2022
-    string Y
-    float flota
-    return x
-}
+    float flota = 22.5
+    char letra 
+    void funcion()

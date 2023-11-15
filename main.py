@@ -42,7 +42,29 @@ print("El nombre de la variable es: "+ nombre)
 print("El valor es: "+valor)
 """
 
+def lectura(linea):
+    try:
+      tipo, nombre3, valor3, operacion = Lectura.dataIdentifyTypeToNameToValue(linea)
+      print("Operacion " + operacion )
+      print("Tipo " + tipo)
+      print("Nombre: "+ nombre3)
+      print("Valor: "+ valor3)
 
+    except Exception: 
+       print("linea sin poder leerse 1")
+       pass
 
+    try:
+        tipo2, nombre, operacion2 = Lectura.dataIdentifyTypeToName(line)
+        print("Operacion " + operacion2 ) 
+        print("Tipo " + tipo2)
+        print("Nombre: "+ nombre)
+         
+    except Exception: 
+        print("linea sin poder leerse 2")
+        pass  
 
+lineas = Lectura.read("Codigo.txt")  
+for line in lineas: 
+    lectura(line)
 
