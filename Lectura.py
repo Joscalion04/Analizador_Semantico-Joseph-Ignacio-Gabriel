@@ -22,7 +22,7 @@ def separateWords(text):
 # (tipo nombre, tipo nombre)   //6 parametros
 # }                            //7 cierre de funcion 
 
-def dataIdentifyTypeToNameToValue(text):
+def dataIdentifyTypeToNameToValue(text): #1
     patron = r"(\w+)\s+(\w+)\s+=\s+(.+)"
     
     dataValue = ""
@@ -32,43 +32,42 @@ def dataIdentifyTypeToNameToValue(text):
         dataType = resultado.group(1)
         dataName = resultado.group(2)
         dataValue = resultado.group(3)
-        return dataType,dataName,dataValue
+        return dataType,dataName,dataValue, 1
     else:
         return None
 
-def dataIdentifyTypeToName(text):
+def dataIdentifyTypeToName(text): #2
     patron = r"(\w+)\s+(\w+)"
     resultado = re.search(patron, text)
     if resultado:
         dataType = resultado.group(1)
         dataName = resultado.group(2)
-        return dataType, dataName
+        return dataType, dataName, 2
     else:
         return None
 
-def dataIdentifyNameToValue(text):
+def dataIdentifyNameToValue(text): #3
     patron = r"(\w+)\s+=\s+(.+)"
     resultado = re.search(patron, text)
     if resultado:
         dataName = resultado.group(1)
         dataValue = resultado.group(2)
-        return dataName, dataValue
+        return dataName, dataValue, 3 
     else:
         return None
 
-def dataIdentifyNameToName(text):
+def dataIdentifyNameToName(text):  #4
     patron = r"(\w+)\s+=\s+(\w+)"
     resultado = re.search(patron, text)
     if resultado:
         nombre1 = resultado.group(1)
         nombre2 = resultado.group(2)
-        return nombre1, nombre2
+        return nombre1, nombre2,4
     else:
         return None
 
-def dataIdentifyWithParenthesis(text):
+def dataIdentifyWithParenthesis(text): #5 con parte del 6 
     patron = r"(\w+)\s+(\w+)\s+\((.*)\)"
-
     dataType = ""
     dataName = ""
     dataValue = ""
@@ -77,14 +76,17 @@ def dataIdentifyWithParenthesis(text):
         dataType = resultado.group(1)
         dataName = resultado.group(2)
         parameters = resultado.group(3)
-        return dataType,dataName,parameters
+        return dataType,dataName,parameters, 5
     else:
         return None
     
+#tipo nombre , .... de una linea 
+# int x, int y, string p... 
 
 
-text = "int a (int x, int y ) "
+#text = "int a (int x, int y ) "
 
+"""
 dataType, dataName, dataValue = dataIdentifyWithParenthesis(text)
 
 print(dataType)
@@ -108,3 +110,4 @@ variable1,variable2 = dataIdentifyNameToName(linea4)
 print("\nDATA IDENTIFY 4")
 print("Var 1: "+ variable1)
 print("Var 2: "+ variable2)
+"""

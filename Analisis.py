@@ -1,15 +1,17 @@
 #Analisis Semantico
 
 
-tiposDatos = {'int' :(int,), 'float':(float,), 'string': (str,), 'void':(type(None),) }
+tiposDatos = {'int' :(), 'float':(), 'string': (), 'void':() }
 diccionarioGen = {}
 
+"""
 def tipoDato(word,dato): 
     
     if word in tiposDatos and isinstance(dato, tiposDatos[word]): 
         return "word"+str(dato)
     else: 
         return "error"
+"""
 
 def isTipo(word):
     if word in tiposDatos:
@@ -37,18 +39,18 @@ def validateString(word):
     else:
         return False
 
-def addVariableGen(name,type,value): 
-    diccionarioGen[name]= ("var",type,value)
-# [0] es para "var", [1] para el tipo de variable, [2] para el valor que almacena 
+def addVariableGen(name,type): 
+    diccionarioGen[name]= ("var",type)
+# [0] es para "var", [1] para el tipo de variable
 def addFunctionGen(name,type): 
     diccionarioGen[name] = ("fun",type, {})
 #[0] es para "fun", [1] para tipo de funcion, [2] para subdiccionario donde se almacenan variables locales
 
-def addVarFunction(nameFun, nameVar, type, value): 
-    diccionarioGen[nameFun][2][nameVar]= (type,value)
+def addVarFunction(nameFun, nameVar, type): 
+    diccionarioGen[nameFun][2][nameVar]= (type)
 
-def addReturnVal(nameFun, value): 
-    diccionarioGen[nameFun][2]["return"]= (diccionarioGen[nameFun][1],value)
+def addReturnVal(nameFun): 
+    diccionarioGen[nameFun][2]["return"]= (diccionarioGen[nameFun][1])
 
 def KeyEnDiccionario(word):
     if word in diccionarioGen:
@@ -57,18 +59,12 @@ def KeyEnDiccionario(word):
         return False
 
 
-def ValorEnDiccionario(key):
-    return  diccionarioGen[key][2]
+def TipoVarEnDiccionario(key):
+    return  diccionarioGen[key][1]
     
-def valorFuncionEnDiccionario(funName,key):
+def TipoValFuncionEnDiccionario(funName,key):
     return diccionarioGen[funName][2][key][1]
 
-addVariableGen("x","float","112.5")
-addFunctionGen("prueba1", "int")
-addVarFunction("prueba1", "x", "int","225")
-addReturnVal("prueba1", "559955")
-print(diccionarioGen)
-print(valorFuncionEnDiccionario("prueba1","return"))
 
      
 

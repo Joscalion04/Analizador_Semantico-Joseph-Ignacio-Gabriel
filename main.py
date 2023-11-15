@@ -23,7 +23,7 @@ for linea in lineas:
 
 """
 
-
+""""
 #Asi se agregan elementos en el diccionario 
 datos = {}     
 datos["x"] = (int, "122")  #asi agregamos variables 
@@ -40,7 +40,7 @@ dato, nombre, valor = Lectura.dataIdentifyTypeToNameToValue(linea)
 print("El tipo de dato es:" + dato)
 print("El nombre de la variable es: "+ nombre)
 print("El valor es: "+valor)
-
+"""
 
 
 
