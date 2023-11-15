@@ -23,28 +23,31 @@ def separateWords(text):
 # }                            //7 cierre de funcion 
 
 def dataIdentifyTypeToNameToValue(text): #1
-    patron = r"(\w+)\s+(\w+)\s+=\s+(.+)"
+    try:
+        patron = r"(\w+)\s+(\w+)\s+=\s+(.+)"
+        dataValue = ""
+        dataType = ""
+        resultado = re.search(patron, text)
+        if resultado:
+            dataType = resultado.group(1)
+            dataName = resultado.group(2)
+            dataValue = resultado.group(3)
+            return dataType,dataName,dataValue, "1"
+    except Exception: 
+        return None 
     
-    dataValue = ""
-    dataType = ""
-    resultado = re.search(patron, text)
-    if resultado:
-        dataType = resultado.group(1)
-        dataName = resultado.group(2)
-        dataValue = resultado.group(3)
-        return dataType,dataName,dataValue, 1
-    else:
-        return None
-
 def dataIdentifyTypeToName(text): #2
-    patron = r"(\w+)\s+(\w+)"
-    resultado = re.search(patron, text)
-    if resultado:
-        dataType = resultado.group(1)
-        dataName = resultado.group(2)
-        return dataType, dataName, 2
-    else:
-        return None
+    try:
+        if len(text.split()) != 2:
+            raise ValueError("Invalid number of words. Expected 2.")
+        patron = r"(\w+)\s+(\w+)+?"
+        resultado = re.search(patron, text)
+        if resultado:
+            dataType = resultado.group(1)
+            dataName = resultado.group(2)
+            return dataType, dataName, "2"
+    except Exception: 
+        return None 
 
 def dataIdentifyNameToValue(text): #3
     patron = r"(\w+)\s+=\s+(.+)"
@@ -124,5 +127,5 @@ def variablesDeLasFunciones(text):
     return parameters
         
         
-parametros=variablesDeLasFunciones(" int x , int y , string p , string c ")
-print(parametros)
+#parametros=variablesDeLasFunciones(" int x , int y , string p , string c ")
+#print(parametros)
