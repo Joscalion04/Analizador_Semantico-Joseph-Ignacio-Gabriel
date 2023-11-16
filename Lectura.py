@@ -182,7 +182,22 @@ def loopDetection(text):# JOSEPH <-------------CHECK ------------
             return None
     except Exception:
         return None
-    
+
+def dataToNameToFunction(text): # JOSEPH <-------------CHECK ------------
+    pattern = r"(\w+)\s+(\w+)\s*=\s*(\w+)\s*\(\s*(.*?)\s*\)"
+    match = re.match(pattern, text)
+    if match:
+        data_type = match.group(1)
+        variable_name = match.group(2)
+        function_name = match.group(3)
+        params_string = match.group(4)
+        if re.match(r"[a-zA-Z]+", data_type):
+            return data_type, variable_name, function_name, params_string,"12"
+        else:
+            return None
+    else:
+        return None
+
 # ---------------------------------- DATOS Y PRUEBAS LECTURA.PY --------------------------------------
 def validaLinea(linea):
     if dataTypeNameToOperation(linea):
