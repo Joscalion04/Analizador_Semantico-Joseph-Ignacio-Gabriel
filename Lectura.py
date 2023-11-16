@@ -50,7 +50,7 @@ def dataIdentifyTypeToName(text): #2
         return None 
 
 def dataIdentifyNameToValue(text): #3
-    patron = r"(\w+)\s+=\s+(.+)"
+    patron = r"(\w+)\s*=\s*(.+)"
     resultado = re.search(patron, text)
     if resultado:
         dataName = resultado.group(1)
@@ -60,7 +60,7 @@ def dataIdentifyNameToValue(text): #3
         return None
 
 def dataIdentifyNameToName(text):  #4
-    patron = r"(\w+)\s+=\s+(\w+)"
+    patron = r"([A-Za-z]+)\s*=\s*([A-Za-z]+)"
     resultado = re.search(patron, text)
     if resultado:
         nombre1 = resultado.group(1)
@@ -114,6 +114,7 @@ print("Var 1: "+ variable1)
 print("Var 2: "+ variable2)
 """
 def variablesDeLasFunciones(text):
+
     parameters=[]
     line = text
     line=line.replace(",",'')
@@ -122,10 +123,20 @@ def variablesDeLasFunciones(text):
     word=""
     for line in lineWords:  
             word=line
-            if word !='':
-                parameters.append(word)
-    return parameters
+            try:
+                var1, var2,num = dataIdentifyNameToName(word)
+                parameters.append(var1)
+                parameters.append(var2)
+            except Exception:
+                try: 
+                    var3, var4,num = dataIdentifyNameToValue(word)
+                    parameters.append(var3)
+                    parameters.append(var4)
+                except Exception:
+                    word=word.replace("=",'')
+                    if word !='':
+                        parameters.append(word)
+    return parameters      
         
-        
-#parametros=variablesDeLasFunciones(" int x , int y , string p , string c ")
-#print(parametros)
+parametros=variablesDeLasFunciones(" int x = y, int y = 0, string p='pruebas' , string c ")
+print(parametros)
