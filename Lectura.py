@@ -3,7 +3,7 @@ import re
 
 def read(archivo):
     with open(archivo, 'r') as file:
-        lineas = file.readlines()
+        lineas = [line.lstrip() for line in file.readlines()]
     return lineas
 
 def separateWords(text): 
@@ -14,14 +14,6 @@ def separateWords(text):
             lineWords = line.split(' ')
             words.extend(lineWords)
     return words 
-
-# tipo nombre =  valor         //1 nueva variable -> Check
-# tipo nombre                  //2 variable sin valor
-# nombre = valor               //3 variable = valor -> Check
-# nombre = nombre              //4 variable = variable 
-# tipo nombre (                //5 nueva funcion 
-# (tipo nombre, tipo nombre)   //6 parametros
-# }                            //7 cierre de funcion 
 
 def dataIdentifyTypeToNameToValue(text): #1 JOSEPH <------------- CHECK ------------
     try: 
@@ -113,31 +105,8 @@ def find_closing_brace(line):
 
 #text = "int a (int x, int y ) "
 
-"""
-dataType, dataName, dataValue = dataIdentifyWithParenthesis(text)
 
-print(dataType)
-print(dataName)
-print(dataValue)
 
-linea2 = "string a"
-tipo2, nombre2 = dataIdentifyTypeToName(linea2)
-print("\nDATA IDENTIFY 2")
-print("Tipo: "+ tipo2)
-print("Nombre: "+ nombre2)
-
-linea3 = "a = joseph"
-nombre3, valor3 = dataIdentifyNameToValue(linea3)
-print("\nDATA IDENTIFY 3")
-print("Nombre: "+ nombre3)
-print("Valor: "+ valor3)
-
-linea4 = "var1 = var2"
-variable1,variable2 = dataIdentifyNameToName(linea4)
-print("\nDATA IDENTIFY 4")
-print("Var 1: "+ variable1)
-print("Var 2: "+ variable2)
-"""
 def variablesDeLasFunciones(text):
 
     parameters=[]
