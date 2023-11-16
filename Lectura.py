@@ -60,7 +60,7 @@ def dataIdentifyNameToValue(text): #3
     if resultado:
         dataName = resultado.group(1)
         dataValue = resultado.group(2)
-        return dataName, dataValue, 3 
+        return dataName, dataValue, "3" 
     else:
         return None
 
@@ -72,7 +72,7 @@ def dataIdentifyNameToName(text):  #4
     if resultado:
         nombre1 = resultado.group(1)
         nombre2 = resultado.group(2)
-        return nombre1, nombre2,4
+        return nombre1, nombre2, "4"
     else:
         return None
 

@@ -67,6 +67,7 @@ def lectura(linea, num, operacion, function, functionName):
        print("linea sin poder leerse 1")
        pass
 
+
     try:
         tipo, nombre, operacion = Lectura.dataIdentifyTypeToName(line)
         if Analisis.isTipo(tipo) == False: 
@@ -86,6 +87,18 @@ def lectura(linea, num, operacion, function, functionName):
         print("linea sin poder leerse 2")
         pass  
     
+    try:
+        name, valor, operacion = Lectura.dataIdentifyNameToValue(line)
+        if Analisis.KeyEnDiccionario(name) == True: 
+            if Analisis.validateGeneral(Analisis.TipoVarEnDiccionario(name),valor) == False:
+                error = "Linea " + str(num) + " Error: "+ str(valor) + " no es un dato aceptable para una variable de tipo " + str(tipo)
+        elif function == True: 
+            if Analisis.KeyInFunction(functionName, name) == True:
+                if Analisis.validateGeneral()
+                
+    except Exception:
+        print("linea sin poder leerse 3")
+        pass
   
 
     return error,operacion, function, functionName
