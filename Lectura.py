@@ -139,3 +139,20 @@ def dataNametoOperation(text): # JOSEPH <-------------UN- CHECK ------------
             return None
     except Exception:
         return None
+    
+def dataTypeNameToOperation(text): # JOSEPH <-------------UN- CHECK ------------
+    try:
+        patron = r"(\w+)\s+(\w+)\s*=\s*((\w+(\s*[\+\-\*/]\s*\w+)*))"
+        resultado = re.search(patron, text)
+        if resultado and resultado.start() == 0:
+            daatYpe = resultado.group(1)
+            nameData = resultado.group(2)
+            operators = resultado.group(3)
+            if not re.match(r'^\w+(\s*[\+\-\*/]\s*\w+)*$', operators):
+                return None
+            operators = re.split(r'\s*[\+\-\*/]\s*', operators)
+            return daatYpe, nameData, operators,"9"
+        else:
+            return None
+    except Exception:
+        return None
