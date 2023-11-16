@@ -96,7 +96,16 @@ def dataIdentifyWithParenthesis(text): #5 JOSEPH <------------- CHECK ----------
         return None
     else:
         return None
-    
+
+def find_closing_brace(line):
+    if "}" in line:
+        if line[line.index("}") + 1:] == "":
+            return "8"
+        else:
+            return None
+    else:
+        return None
+
 #tipo nombre , .... de una linea 
 # int x, int y, string p... 
 
