@@ -99,14 +99,6 @@ def find_closing_brace(line):
     else:
         return None
 
-#tipo nombre , .... de una linea 
-# int x, int y, string p... 
-
-
-#text = "int a (int x, int y ) "
-
-
-
 def variablesDeLasFunciones(text):
 
     parameters=[]
@@ -132,8 +124,18 @@ def variablesDeLasFunciones(text):
                         parameters.append(word)
     return parameters      
 
-
-#parametros=variablesDeLasFunciones(" int x=0, int y = 0, string p='pruebas' , string c ")
-
-#print(parametros)
-#print(dataIdentifyNameToValue('e = pepe 89'))
+def dataNametoOperation(text): # JOSEPH <-------------UN- CHECK ------------
+    try:
+        patron = r"(\w+)\s*=\s*((\w+(\s*[\+\-\*/]\s*\w+)*))"
+        resultado = re.search(patron, text)
+        if resultado and resultado.start() == 0:
+            dato = resultado.group(1)
+            operacion = resultado.group(2)
+            if not re.match(r'^\w+(\s*[\+\-\*/]\s*\w+)*$', operacion):
+                return None
+            operandos = re.split(r'\s*[\+\-\*/]\s*', operacion)
+            return dato, operandos,"8"
+        else:
+            return None
+    except Exception:
+        return None
