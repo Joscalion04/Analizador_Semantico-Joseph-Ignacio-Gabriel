@@ -182,3 +182,34 @@ def loopDetection(text):# JOSEPH <-------------CHECK ------------
             return None
     except Exception:
         return None
+    
+# ---------------------------------- DATOS Y PRUEBAS LECTURA.PY --------------------------------------
+def validaLinea(linea):
+    if dataTypeNameToOperation(linea):
+        tipo_dato, nombre_dato, operadores,nun = dataTypeNameToOperation(linea)
+        print("Tipo de Dato:", tipo_dato)
+        print("Nombre del Dato:", nombre_dato)
+        print("Operadores:", operadores)
+        print("Numero de Operacion: "+num)
+    elif dataNametoOperation(linea):
+        dato, operandos,num = dataNametoOperation(linea)
+        print("Dato:", dato)
+        print("Operandos:", operandos)
+        print("Numero de Operacion: "+num)
+    elif conditionalDetection(linea):
+        condicion, valor1, valor2,num = conditionalDetection(linea)
+        print("Condicional: " + condicion)
+        print("Valor 1: " + valor1)
+        print("Valor 2: " + valor2)
+        print("Numero de Operacion: "+num)
+    elif loopDetection(linea):
+        loop, valor1, valor2,num = loopDetection(linea)
+        print("Condicional: " + loop)
+        print("Valor 1: " + valor1)
+        print("Valor 2: " + valor2)
+        print("Numero de Operacion: "+num)
+    else :
+        print("ERROR DE LINEA")
+
+texto_ejemplo = "while (5 < 6){"
+validaLinea(texto_ejemplo)
