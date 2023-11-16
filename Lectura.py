@@ -50,8 +50,13 @@ def dataIdentifyTypeToName(text): #2
         return None 
 
 def dataIdentifyNameToValue(text): #3
-    patron = r"(\w+)\s*=\s*(.+)"
+    if len(text.split()) >3:
+            return None
+    patron = r"([A-Za-z]+)\s*=\s*([0-9_]+)\s*$"
     resultado = re.search(patron, text)
+    if resultado is None:
+        patron = r"([A-Za-z]+)\s*=\s*('[^']*'|\"[^\"]*\")\s*$"
+        resultado =  re.search(patron, text)
     if resultado:
         dataName = resultado.group(1)
         dataValue = resultado.group(2)
@@ -60,7 +65,9 @@ def dataIdentifyNameToValue(text): #3
         return None
 
 def dataIdentifyNameToName(text):  #4
-    patron = r"([A-Za-z]+)\s*=\s*([A-Za-z]+)"
+    if len(text.split()) > 3:
+           return None
+    patron = r"([A-Za-z]+)\s*=\s*([A-Za-z]+)\s*$"
     resultado = re.search(patron, text)
     if resultado:
         nombre1 = resultado.group(1)
@@ -137,6 +144,9 @@ def variablesDeLasFunciones(text):
                     if word !='':
                         parameters.append(word)
     return parameters      
-        
-parametros=variablesDeLasFunciones(" int x = y, int y = 0, string p='pruebas' , string c ")
-print(parametros)
+
+
+#parametros=variablesDeLasFunciones(" int x=0, int y = 0, string p='pruebas' , string c ")
+
+#print(parametros)
+#print(dataIdentifyNameToValue('e = pepe 89'))
