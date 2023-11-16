@@ -156,3 +156,16 @@ def dataTypeNameToOperation(text): # JOSEPH <-------------UN- CHECK ------------
             return None
     except Exception:
         return None
+
+def conditionalDetection(text):# JOSEPH <-------------CHECK ------------
+    try:
+        patron = r"^\s*if\s*\(\s*(\w+)\s*([<>]=?)\s*(\w+)\s*\)\s*{?$"
+        resultado = re.search(patron, text)
+        if resultado:
+            value1 = resultado.group(1)
+            value2 = resultado.group(3)
+            return "if", value1, value2,"10"
+        else:
+            return None
+    except Exception:
+        return None
