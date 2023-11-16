@@ -9,9 +9,10 @@ def read(archivo):
 def separateWords(text): 
     words=[]
     lines = text.split('\n')
-    for line in lines: 
-        lineWords = line.split(' ')
-        words.extend(lineWords)
+    for line in lines:
+        if line != '\n': 
+            lineWords = line.split(' ')
+            words.extend(lineWords)
     return words 
 
 # tipo nombre =  valor         //1 nueva variable -> Check

@@ -1,6 +1,8 @@
-    int x = 33.3
-    float flota = 22
-    string x = "pronar" 
-    string prueba = probando
-    char letra 
-    void funcion()
+int x = 33.3
+float flota = 22
+string x = "pronar" 
+string prueba = probando
+x = 22
+x = prueba
+char letra 
+void funcion()

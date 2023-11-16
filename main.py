@@ -88,24 +88,52 @@ def lectura(linea, num, operacion, function, functionName):
         pass  
     
     try:
-        name, valor, operacion = Lectura.dataIdentifyNameToValue(line)
-        if Analisis.KeyEnDiccionario(name) == True: 
-            if Analisis.validateGeneral(Analisis.TipoVarEnDiccionario(name),valor) == False:
+        nombre, valor, operacion = Lectura.dataIdentifyNameToValue(line)
+        if Analisis.KeyEnDiccionario(nombre) == True: 
+            if Analisis.validateGeneral(Analisis.TipoVarEnDiccionario(nombre),valor) == False:
                 error = "Linea " + str(num) + " Error: "+ str(valor) + " no es un dato aceptable para una variable de tipo " + str(tipo)
         elif function == True: 
-            if Analisis.KeyInFunction(functionName, name) == True:
-                if Analisis.validateGeneral()
-                
+            if Analisis.KeyInFunction(functionName, nombre) == True:
+                if Analisis.validateGeneral(Analisis.TipoValFuncionEnDiccionario(functionName, nombre)) == False:
+                    error = "Linea " + str(num) + " Error: "+ str(valor) + " no es un dato aceptable para una variable de tipo " + str(tipo)
     except Exception:
         print("linea sin poder leerse 3")
         pass
   
-
+    try:
+        nombre, valor, operacion = Lectura.dataIdentifyNameToName(line)
+        if Analisis.KeyEnDiccionario(nombre) == True: 
+            if Analisis.KeyEnDiccionario(valor) == True:
+                if Analisis.validateGeneral(Analisis.TipoVarEnDiccionario(nombre), Analisis.TipoVarEnDiccionario(valor)) == False:
+                    error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(valor) + " no son compatibles"
+            elif function ==True:
+                    if Analisis.KeyInFunction(functionName, valor) == True:
+                        if Analisis.validateGeneral(Analisis.TipoVarEnDiccionario(nombre), Analisis.TipoValFuncionEnDiccionario(functionName,valor)) == False:
+                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(valor) + " no son compatibles"
+            else: 
+                error = "Linea " + str(num) + " Error: La variable " + str(valor) + "  no ha sido declarada"
+        elif function == True:
+            if Analisis.KeyInFunction(functionName, nombre) == True:
+                if Analisis.KeyEnDiccionario(valor) == True:
+                    if Analisis.validateGeneral(Analisis.TipoValFuncionEnDiccionario(functionName,valor), Analisis.TipoVarEnDiccionario(valor)) == False:
+                        error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(valor) + " no son compatibles"
+                elif function ==True:
+                    if Analisis.KeyInFunction(functionName, valor) == True:
+                        if Analisis.validateGeneral(Analisis.TipoValFuncionEnDiccionario(functionName,valor), Analisis.TipoValFuncionEnDiccionario(functionName,valor)) == False:
+                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(valor) + " no son compatibles"
+                else: 
+                    error = "Linea " + str(num) + " Error: La variable " + str(valor) + "  no ha sido declarada"
+        else : 
+            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + "  no ha sido declarada"
+        
+    except Exception:
+        print("linea sin poder leerse 4")
+        pass
     return error,operacion, function, functionName
 
 
 lineas = Lectura.read("Codigo.txt") 
-numLine = 0 
+numLine = 1 
 operacion = ""
 function = False
 functionName = ""
