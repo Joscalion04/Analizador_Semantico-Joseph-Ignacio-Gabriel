@@ -169,3 +169,16 @@ def conditionalDetection(text):# JOSEPH <-------------CHECK ------------
             return None
     except Exception:
         return None
+    
+def loopDetection(text):# JOSEPH <-------------CHECK ------------
+    try:
+        patron = r"^\s*while\s*\(\s*(\w+)\s*([<>]=?)\s*(\w+)\s*\)\s*{?$"
+        resultado = re.search(patron,text)
+        if resultado:
+            value1 = resultado.group(1)
+            value2 = resultado.group(2)
+            return "while",value1,value2, "11"
+        else:
+            return None
+    except Exception:
+        return None
