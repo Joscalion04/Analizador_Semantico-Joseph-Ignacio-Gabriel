@@ -22,32 +22,38 @@ def separateWords(text):
 # (tipo nombre, tipo nombre)   //6 parametros
 # }                            //7 cierre de funcion 
 
-def dataIdentifyTypeToNameToValue(text): #1
-    try:
-        patron = r"(\w+)\s+(\w+)\s+=\s+(.+)"
-        dataValue = ""
-        dataType = ""
+def dataIdentifyTypeToNameToValue(text): #1 JOSEPH <------------- CHECK ------------
+    try: 
+        patron = r"(\w+)\s+(\w+)\s*=\s*(.+)"
+        dataValue = "" 
+        dataType = "" 
         resultado = re.search(patron, text)
-        if resultado:
-            dataType = resultado.group(1)
-            dataName = resultado.group(2)
-            dataValue = resultado.group(3)
-            return dataType,dataName,dataValue, "1"
+        if re.match(patron,text):
+            if resultado: 
+                dataType = resultado.group(1) 
+                dataName = resultado.group(2) 
+                dataValue = resultado.group(3) 
+                if(len(dataValue.split()) == 1):
+                    return dataType,dataName,dataValue,"1" 
+                else:
+                    raise ValueError("Error, argumentos")
+        else:
+            return None
     except Exception: 
-        return None 
+        return None
     
-def dataIdentifyTypeToName(text): #2
-    try:
-        if len(text.split()) != 2:
-            raise ValueError("Invalid number of words. Expected 2.")
-        patron = r"(\w+)\s+(\w+)+?"
-        resultado = re.search(patron, text)
-        if resultado:
-            dataType = resultado.group(1)
-            dataName = resultado.group(2)
-            return dataType, dataName, "2"
-    except Exception: 
-        return None 
+def dataIdentifyTypeToName(text): #2 JOSEPH <------------- CHECK ------------
+    try: 
+        if len(text.split()) != 2: 
+            raise ValueError("Invalid number of words. Expected 2.") 
+        patron = r"(\w+)\s+(\w+)+?" 
+        resultado = re.search(patron, text) 
+        if resultado: 
+            dataType = resultado.group(1) 
+            dataName = resultado.group(2) 
+            return dataType, dataName,"2" 
+    except Exception:  
+        return None  
 
 def dataIdentifyNameToValue(text): #3
     if len(text.split()) >3:
@@ -76,8 +82,8 @@ def dataIdentifyNameToName(text):  #4
     else:
         return None
 
-def dataIdentifyWithParenthesis(text): #5 con parte del 6 
-    patron = r"(\w+)\s+(\w+)\s+\((.*)\)"
+def dataIdentifyWithParenthesis(text): #5 JOSEPH <------------- CHECK ------------
+    patron = r"(\w+)\s+(\w+)\s*\(\s*(.*)\s*\)\s*(\{)?"
     dataType = ""
     dataName = ""
     resultado = re.search(patron, text)
@@ -85,7 +91,9 @@ def dataIdentifyWithParenthesis(text): #5 con parte del 6
         dataType = resultado.group(1)
         dataName = resultado.group(2)
         parameters = resultado.group(3)
-        return dataType,dataName,parameters, 5
+        if resultado.group(4) == "{" or resultado.group(4) == "":
+           return dataType, dataName, parameters, "5"
+        return None
     else:
         return None
     
