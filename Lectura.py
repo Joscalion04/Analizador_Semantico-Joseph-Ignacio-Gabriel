@@ -198,6 +198,17 @@ def dataToNameToFunction(text): # JOSEPH <-------------CHECK ------------
     else:
         return None
 
+def nameToFunction(text): # JOSEPH <-------------CHECK ------------
+    pattern = r"(\w+)\s*=\s*(\w+)\s*\(\s*(.*?)\s*\)"
+    match = re.match(pattern, text)
+    if match:
+        variable_name = match.group(1)
+        function_name = match.group(2)
+        params_string = match.group(3)
+        return variable_name, function_name, params_string, "13"
+    else:
+        return None
+
 # ---------------------------------- DATOS Y PRUEBAS LECTURA.PY --------------------------------------
 def validaLinea(linea):
     if dataTypeNameToOperation(linea):
