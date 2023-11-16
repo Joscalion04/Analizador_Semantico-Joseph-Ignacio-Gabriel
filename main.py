@@ -42,32 +42,64 @@ print("El nombre de la variable es: "+ nombre)
 print("El valor es: "+valor)
 """
 
-def lectura(linea, num):
+def lectura(linea, num, operacion, function, functionName):
     tipo = ""
     nombre = ""
     valor = ""
-    operacion = ""
     error = "Linea " + str(num) + " exitosa"
     try:
         tipo , nombre, valor, operacion = Lectura.dataIdentifyTypeToNameToValue(linea)
         if Analisis.isTipo(tipo) == False: 
             error = "Linea " + str(num) + " Error: "+ str(tipo) + " no es un tipo de dato aceptado"
         elif Analisis.validateGeneral(tipo,valor) == False: 
-            error = "Linea " + str(num) + " Error: "+ str(valor) + " no es un dato aceptable para una variable de tipo " + str(tipo)            
+            error = "Linea " + str(num) + " Error: "+ str(valor) + " no es un dato aceptable para una variable de tipo " + str(tipo)
+            if function ==True:
+                if Analisis.KeyInFunction(functionName, nombre) == False:
+                    Analisis.addVarFunction(functionName, nombre,tipo)
+                else:
+                    error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
+            else: 
+                if Analisis.KeyEnDiccionario(nombre)==False:
+                    Analisis.addVariableGen(nombre,tipo)
+                else: 
+                     error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
     except Exception: 
        print("linea sin poder leerse 1")
        pass
+
     try:
         tipo, nombre, operacion = Lectura.dataIdentifyTypeToName(line)
         if Analisis.isTipo(tipo) == False: 
             error = "Linea " + str(num) + " Error: "+ str(tipo) + " no es un tipo de dato aceptado"
+        else: 
+            if function ==True:
+                if Analisis.KeyInFunction(functionName, nombre) == False:
+                    Analisis.addVarFunction(functionName, nombre,tipo)
+                else:
+                    error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
+            else: 
+                if Analisis.KeyEnDiccionario(nombre)==False:
+                    Analisis.addVariableGen(nombre,tipo)
+                else: 
+                     error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
     except Exception: 
         print("linea sin poder leerse 2")
         pass  
-    return error 
+    
+  
+
+    return error,operacion, function, functionName
+
+
 lineas = Lectura.read("Codigo.txt") 
 numLine = 0 
+operacion = ""
+function = False
+functionName = ""
 for line in lineas: 
-    print(lectura(line,numLine))
+    error, operacion, function, functionName = lectura(line,numLine, operacion,function, functionName)
+    print(error)
     numLine += 1
+
+print(Analisis.diccionarioGen)
 

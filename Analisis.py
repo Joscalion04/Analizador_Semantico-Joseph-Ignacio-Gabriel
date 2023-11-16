@@ -69,13 +69,28 @@ def KeyEnDiccionario(word):
     else: 
         return False
 
+def AllSearch(word): 
+    prove = " "
+    for key in diccionarioGen.keys():
+        prove = diccionarioGen[key][0]
+        if key == word:
+            return True
+        if diccionarioGen[key][0] == "fun":
+            if KeyInFunction(key,word) == True:
+                return True
+    return False                
+
+def KeyInFunction(funName, key):
+    if key in diccionarioGen[funName][2]:
+        return True
+    else:
+        return False
 
 def TipoVarEnDiccionario(key):
     return  diccionarioGen[key][1]
     
 def TipoValFuncionEnDiccionario(funName,key):
     return diccionarioGen[funName][2][key][1]
-
 
 
 
