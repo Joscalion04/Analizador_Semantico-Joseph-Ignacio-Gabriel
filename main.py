@@ -115,16 +115,19 @@ def lectura(linea, num, operacion, function, functionName):
         nombre, operations, operacion = Lectura.dataNametoOperation(line)
         if Analisis.KeyInDiccionario(nombre) ==True:
             tipo = Analisis.TipoVarEnDiccionario(nombre)
-            verificateTypes(tipo, operations, None, num)
+            #Analisis.verificateTypes(tipo, operations, None, num)
         elif function == True:
             if Analisis.KeyInFunction(functionName, nombre):
                 tipo = Analisis.TipoValFuncionEnDiccionario(functionName, nombre)
-                verificateTypes(tipo, operations, functionName, num)
-                
-
+                #Analisis.verificateTypes(tipo, operations, functionName, num)
+        else:
+            error =  "Linea " + str(num) + " Error: "+ nombre + " no es una variable que haya sido declarada"
     except Exception:
         print("linea sin poder leerse 7")
         pass
+    
+    
+   
 
     return error,operacion, function, functionName
 

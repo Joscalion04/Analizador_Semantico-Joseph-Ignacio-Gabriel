@@ -163,7 +163,7 @@ def dataTypeNameToOperation(text): # JOSEPH <-------------UN- CHECK ------------
             if not re.match(r'^\w+(\s*[\+\-\*/]\s*\w+)*$', operators):
                 return None
             operators = re.split(r'\s*[\+\-\*/]\s*', operators)
-            return daatYpe, nameData, operators,"9"
+            return dataType, nameData, operators,"9"
         else:
             return None
     except Exception:
