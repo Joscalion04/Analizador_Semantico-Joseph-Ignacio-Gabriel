@@ -1,8 +1,14 @@
  int x = 33.3
    float flota = 22
-  string x = "pronar" 
+  string pobar ="pronar" 
 string prueba = probando
 x = 22
 x = y
 char letra 
-void funcion()
+void funcion( ){
+  int p 
+  }
+string afuera ="estoyAfuera" 
+x = 2 + 22.4 
+ 
+
