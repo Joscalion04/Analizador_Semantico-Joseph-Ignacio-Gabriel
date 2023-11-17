@@ -168,22 +168,22 @@ def dataTypeNameToOperation(text): # JOSEPH <-------------UN- CHECK ------------
 
 #if ( x > y ) falta ==
 def conditionalDetection(text):# JOSEPH <-------------CHECK ------------
-    try:
-        patron = r"^\s*if\s*\(\s*(\w+)\s*([<>]=?)\s*(\w+)\s*\)\s*{?$"
-        resultado = re.search(patron, text)
-        if resultado:
-            value1 = resultado.group(1)
-            value2 = resultado.group(3)
-            return "if", value1, value2,"10"
-        else:
-            return None
-    except Exception:
-        return None
+    try: 
+        patron = r"^\s*if\s*\(\s*(\w+)\s*([<>]=?|==|!=)\s*(\w+)\s*\)\s*{?$"
+        resultado = re.search(patron, text) 
+        if resultado: 
+            value1 = resultado.group(1) 
+            value2 = resultado.group(3) 
+            return "if", value1, value2,"10" 
+        else: 
+            return None 
+    except Exception: 
+        return None 
 
 #while( x > y)  arreglar =  
 def loopDetection(text):# JOSEPH <-------------CHECK ------------
     try:
-        patron = r"^\s*while\s*\(\s*(\w+)\s*([<>]=?)\s*(\w+)\s*\)\s*{?$"
+        patron = r"^\s*while\s*\(\s*(\w+)\s*([<>]=?|==|!=)\s*(\w+)\s*\)\s*{?$"
         resultado = re.search(patron, text)
         if resultado:
             value1 = resultado.group(1)
@@ -250,5 +250,5 @@ def validaLinea(linea):
     else :
         print("ERROR DE LINEA")
 
-texto_ejemplo = "while(x < y )" 
+texto_ejemplo = "while(x == y)" 
 validaLinea(texto_ejemplo)
