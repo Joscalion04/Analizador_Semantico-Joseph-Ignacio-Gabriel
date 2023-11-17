@@ -35,7 +35,7 @@ def validateFloat(value):
         return float(value) != int(float(value))
     
 def validateString(word):
-    if word[len(word)-1] == '"' and word[0]=='"':
+    if word[len(word)-2] == '"' and word[0]=='"':
         return True
     else:
         return False
@@ -247,6 +247,7 @@ insertValuesToFunction("sumar",lista,1)
 #print(keyInIfFunc("main","dias"))
 #print(keyInWhileFunc("main","gab"))
 
+#print(validateString('messi goat\n'))
 
 
     
