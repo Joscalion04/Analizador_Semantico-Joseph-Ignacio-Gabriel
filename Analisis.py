@@ -172,6 +172,9 @@ def insertValuesToFunction(nameFunction, values, numLine):
             elif not isTipo(tipo):
                 print("\nError en la linea "+str(numLine)+" El tipo de variable '" + tipo + "' no es aceptado\n")
                 i+=3
+            elif KeyInDiccionario(dato):
+                print("\nError en la linea "+str(numLine)+" El nombre de la variable '" + dato + "' ya existe\n")
+                i+=2
             elif validateGeneral(tipo,posiblevalor):
                 addVarFunction(nameFunction,dato,tipo)
                 i+=3
@@ -194,7 +197,7 @@ def insertValuesToFunction(nameFunction, values, numLine):
 
 addVariableGen("a",'int')
 addFunctionGen("sumar",'int')
-lista = ['bool','b','45','int','c','int','o','4.6','string','nombre']
+lista = ['int','b','x','int','c','int','o','32','string','nombre']
 insertValuesToFunction("sumar",lista,1)
 
 #addIfGen()
