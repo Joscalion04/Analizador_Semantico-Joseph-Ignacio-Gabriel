@@ -129,24 +129,6 @@ def lectura(linea, num, operacion, function, functionName):
     return error,operacion, function, functionName
 
 
-def verificateTypes(type, operations, functionName, lineNum):
-    for operation in operations:
-        if verificationTypeVar(type,operation,functionName, lineNum) != False:
-            if Analisis.validateGeneral(type, operation) == False:
-                print("Linea " + str(lineNum) + "Error: La variable" + str(operation) + " no es un valor valido")
-
-def verificationTypeVar(type, name, functionName, linenum): 
-    if Analisis.KeyInDiccionario(name): 
-        if type != Analisis.TipoVarEnDiccionario(name):
-            print("Linea " + str(linenum) + "Error: La variable" + str(name) + " no es un valor valido")
-            return False
-    elif functionName != None:
-        if Analisis.KeyInFunction(functionName,name) == True:
-            if type != Analisis.TipoValFuncionEnDiccionario(functionName, name): 
-                print("Linea " + str(linenum) + "Error: La variable" + str(name) + " no es un valor valido")
-                return False
-    else: 
-        return True        
 
 lineas = Lectura.read("Codigo.txt") 
 numLine = 1 

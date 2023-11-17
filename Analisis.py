@@ -50,6 +50,25 @@ def validateGeneral(tipo, valor):
     else:
         return False
 
+def verificateTypes(type, operations, functionName, lineNum):
+    for operation in operations:
+        if verificationTypeVar(type,operation,functionName, lineNum) != False:
+            if validateGeneral(type, operation) == False:
+                print("Linea " + str(lineNum) + "Error: La variable" + str(operation) + " no es un valor valido")
+
+def verificationTypeVar(type, name, functionName, linenum): 
+    if KeyInDiccionario(name): 
+        if type != TipoVarEnDiccionario(name):
+            print("Linea " + str(linenum) + "Error: La variable" + str(name) + " no es un valor valido")
+            return False
+    elif functionName != None:
+        if KeyInFunction(functionName,name) == True:
+            if type != TipoValFuncionEnDiccionario(functionName, name): 
+                print("Linea " + str(linenum) + "Error: La variable" + str(name) + " no es un valor valido")
+                return False
+    else: 
+        return True        
+
 def addVariableGen(name,type): 
     diccionarioGen[name]= ("var",type)
 # [0] es para "var", [1] para el tipo de variable
