@@ -152,7 +152,29 @@ def TipoVarEnDiccionario(key):
 def TipoValFuncionEnDiccionario(funName,key):
     return diccionarioGen[funName][2][key][1]
 
+def insertValuesToFunction(nameFunction, values, numLine):
+    i = 0
+    while i < len(values):
+        tipo = values[i]
+        dato = values[i+1]
+        if isTipo(tipo):
+            if KeyInDiccionario(dato):
+                print("\nError en la linea "+str(numLine)+" El nombre de la variable '" + dato + "' ya existe\n")
+                i+=2
+            elif KeyInFunction(nameFunction,dato):
+                print("\nError en la linea "+str(numLine)+" El nombre de la variable '" + dato + "' ya existe en la funcion\n")
+                i+=2      
+            else:
+                addVarFunction(nameFunction,dato,tipo)
+                i+=2
+        else:
+            print("\nError en la linea "+str(numLine)+" El tipo de variable '" + tipo + "' no es aceptado\n")
+            i+=2
 
+addVariableGen("a",'int')
+addFunctionGen("sumar",'int')
+lista = ['bool','b','int','a']
+insertValuesToFunction("sumar",lista,1)
 
 #addIfGen()
 #addWhileGen()
