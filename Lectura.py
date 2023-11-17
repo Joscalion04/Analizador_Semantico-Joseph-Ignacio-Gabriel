@@ -99,7 +99,10 @@ def dataIdentifyWithParenthesis(text): #5 JOSEPH <------------- CHECK ----------
 #}
 def find_closing_brace(line):
     if "}" in line:
-        if line[line.index("}") + 1:] == "":
+        closing_brace_index = line.index("}")
+        rest_of_line = line[closing_brace_index + 1:].strip()
+        
+        if rest_of_line == "":
             return "8"
         else:
             return None
@@ -249,6 +252,3 @@ def validaLinea(linea):
         print("Numero de Operacion: "+num)
     else :
         print("ERROR DE LINEA")
-
-texto_ejemplo = "while(x == y)" 
-validaLinea(texto_ejemplo)
