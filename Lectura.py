@@ -137,15 +137,15 @@ def variablesDeLasFunciones(text):
 # a = operacion (1 + x + 7)
 def dataNametoOperation(text): # JOSEPH <-------------UN- CHECK ------------
     try:
-        patron = r"(\w+)\s*=\s*((\w+(\s*[\+\-\*/]\s*\w+)*))"
+        patron = r"(\w+)\s*=\s*((\w+(\s*[\+\-\*/]\s*\w+)+))"
         resultado = re.search(patron, text)
         if resultado and resultado.start() == 0:
             dato = resultado.group(1)
             operacion = resultado.group(2)
-            if not re.match(r'^\w+(\s*[\+\-\*/]\s*\w+)*$', operacion):
+            if not re.match(r'^\w+(\s*[\+\-\*/]\s*\w+)+$', operacion):
                 return None
             operandos = re.split(r'\s*[\+\-\*/]\s*', operacion)
-            return dato, operandos,"8" #
+            return dato, operandos, "8"  
         else:
             return None
     except Exception:
@@ -154,16 +154,16 @@ def dataNametoOperation(text): # JOSEPH <-------------UN- CHECK ------------
 # int x = operacion 
 def dataTypeNameToOperation(text): # JOSEPH <-------------UN- CHECK ------------
     try:
-        patron = r"(\w+)\s+(\w+)\s*=\s*((\w+(\s*[\+\-\*/]\s*\w+)*))"
+        patron = r"(\w+)\s+(\w+)\s*=\s*((\w+(\s*[\+\-\*/]\s*\w+)+))"
         resultado = re.search(patron, text)
         if resultado and resultado.start() == 0:
-            daatYpe = resultado.group(1)
+            dataType = resultado.group(1)
             nameData = resultado.group(2)
             operators = resultado.group(3)
-            if not re.match(r'^\w+(\s*[\+\-\*/]\s*\w+)*$', operators):
+            if not re.match(r'^\w+(\s*[\+\-\*/]\s*\w+)+$', operators):
                 return None
             operators = re.split(r'\s*[\+\-\*/]\s*', operators)
-            return dataType, nameData, operators,"9"
+            return dataType, nameData, operators, "9"  
         else:
             return None
     except Exception:
@@ -252,3 +252,7 @@ def validaLinea(linea):
         print("Numero de Operacion: "+num)
     else :
         print("ERROR DE LINEA")
+
+
+linea = "x = y"
+validaLinea(linea)
