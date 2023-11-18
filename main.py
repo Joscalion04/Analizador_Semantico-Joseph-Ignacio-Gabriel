@@ -101,6 +101,7 @@ def lectura(linea, num, operacion, function, functionName, conditional):
             error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
         else: 
             Analisis.addFunctionGen(nombre,tipo)
+            Analisis.insertValuesToFunction(nombre,Lectura.variablesDeLasFunciones(parametros),num)
             function=True
             functionName=nombre        
     except Exception:

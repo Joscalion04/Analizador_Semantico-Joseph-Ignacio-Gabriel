@@ -229,18 +229,18 @@ def insertValuesToFunction(nameFunction, values, numLine):
             print("Error en la linea "+str(numLine)+" El tipo de variable '" + tipo + "' no es aceptado\n")
             break
 
-addVariableGen("a",'int')
-addFunctionGen("sumar",'int')
+#addVariableGen("a",'int')
+#addFunctionGen("sumar",'int')
 lista = ['int','b','a','string','valor','int','aux','32','float','nombre',"joseph"]
-insertValuesToFunction("sumar",lista,1)
+#insertValuesToFunction("sumar",lista,1)
 
 
-addVariableGen("uno","int")
-addVariableGen("dos","int")
-addVariableGen("tres","int")
+#addVariableGen("uno","int")
+#addVariableGen("dos","int")
+#addVariableGen("tres","int")
 
-addFunctionGen("messi","void")
-addVarFunction("messi","cuatro","string")
+#addFunctionGen("messi","void")
+#addVarFunction("messi","cuatro","string")
 
 Operations=["uno","dos","tres","cuatro"]
 #print(verificateTypes("string",Operations,"messi",2))

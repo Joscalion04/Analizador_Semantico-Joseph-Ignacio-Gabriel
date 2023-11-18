@@ -6,7 +6,7 @@ x = 22
 int y
 x = pobar
 char letra 
-void funcion( ){
+void funcion(int w, string x ){
   int p 
   }
 string afuera ="estoyAfuera" 
