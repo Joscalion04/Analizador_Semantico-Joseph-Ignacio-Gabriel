@@ -255,4 +255,4 @@ def validaLinea(linea):
 
 
 linea = "x = y"
-validaLinea(linea)
+#validaLinea(linea)

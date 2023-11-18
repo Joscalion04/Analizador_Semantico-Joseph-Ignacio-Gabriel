@@ -1,14 +1,17 @@
  int x = 33.3
    float flota = 22
-  string pobar ="pronar" 
+  string pobar ="pronar"
 string prueba = probando
 x = 22
-x = y
+int y
+x = pobar
 char letra 
 void funcion( ){
   int p 
   }
 string afuera ="estoyAfuera" 
-x = 2 + 22.4 
- 
-
+x = y + prueba
+if(x > y) {
+int zzz
+string l
+}
