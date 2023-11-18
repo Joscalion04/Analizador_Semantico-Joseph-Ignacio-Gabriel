@@ -35,7 +35,9 @@ def validateFloat(value):
         return float(value) != int(float(value))
     
 def validateString(word):
-    if word[len(word)-2] == '"' and word[0]=='"':
+    patron = r"\s*('[^']*'|\"[^\"]*\")\s*$"
+    resultado =  re.search(patron, word)
+    if resultado:
         return True
     else:
         return False
@@ -231,9 +233,9 @@ addFunctionGen("messi","void")
 addVarFunction("messi","cuatro","string")
 
 Operations=["uno","dos","tres","cuatro"]
-print(verificateTypes("string",Operations,"messi",2))
+#print(verificateTypes("string",Operations,"messi",2))
 #print(TipoValFuncionEnDiccionario("messi","cuatro"))
-#print(validateString('" messi goat" \n'))
+#print(validateString("'messigoat' fwgdgw "))
 
 
     
