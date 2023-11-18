@@ -185,43 +185,53 @@ def insertValuesToFunction(nameFunction, values, numLine):
             posiblevalor = values[i+2]
             if isTipo(posiblevalor):
                 if KeyInDiccionario(dato):
-                    print("\nError en la linea "+str(numLine)+" El nombre de la variable '" + dato + "' ya existe\n")
-                    i+=2
+                    print("Error en la linea "+str(numLine)+" El nombre de la variable '" + dato + "' ya existe\n")
+                    break
                 elif KeyInFunction(nameFunction,dato):
-                    print("\nError en la linea "+str(numLine)+" El nombre de la variable '" + dato + "' ya existe en la funcion\n")
-                    i+=2      
+                    print("Error en la linea "+str(numLine)+" El nombre de la variable '" + dato + "' ya existe en la funcion\n")
+                    break      
+                elif not isTipo(tipo):
+                    print("Error en la linea "+str(numLine)+" El tipo de variable '" + tipo + "' no es aceptado\n")
+                    break
                 else:
                     addVarFunction(nameFunction,dato,tipo)
                     i+=2
             elif not isTipo(tipo):
-                print("\nError en la linea "+str(numLine)+" El tipo de variable '" + tipo + "' no es aceptado\n")
-                i+=3
+                print("Error en la linea "+str(numLine)+" El tipo de variable '" + tipo + "' no es aceptado\n")
+                break
             elif KeyInDiccionario(dato):
-                print("\nError en la linea "+str(numLine)+" El nombre de la variable '" + dato + "' ya existe\n")
-                i+=2
+                print("Error en la linea "+str(numLine)+" El nombre de la variable '" + dato + "' ya existe\n")
+                break
+            elif KeyInDiccionario(posiblevalor):
+                if TipoVarEnDiccionario(posiblevalor) == tipo:
+                    addVarFunction(nameFunction,dato,tipo)
+                    i+=3
+                else:
+                    print("Error en la linea "+str(numLine)+" El tipo de la variable '" + dato + "' no es compatible con su dato\n")
+                    break
             elif validateGeneral(tipo,posiblevalor):
                 addVarFunction(nameFunction,dato,tipo)
                 i+=3
             else:
-                print("\nError en la linea "+str(numLine)+" El tipo de la variable '" + dato + "' no es compatible con su dato\n")
-                i+=1
+                print("Error en la linea "+str(numLine)+" El tipo de la variable '" + dato + "' no es compatible con su dato")
+                break
         elif isTipo(tipo):
             if KeyInDiccionario(dato):
-                print("\nError en la linea "+str(numLine)+" El nombre de la variable '" + dato + "' ya existe\n")
-                i+=2
+                print("Error en la linea "+str(numLine)+" El nombre de la variable '" + dato + "' ya existe\n")
+                break
             elif KeyInFunction(nameFunction,dato):
-                print("\nError en la linea "+str(numLine)+" El nombre de la variable '" + dato + "' ya existe en la funcion\n")
-                i+=2      
+                print("Error en la linea "+str(numLine)+" El nombre de la variable '" + dato + "' ya existe en la funcion\n")
+                break      
             else:
                 addVarFunction(nameFunction,dato,tipo)
                 i+=2
         else:
-            print("\nError en la linea "+str(numLine)+" El tipo de variable '" + tipo + "' no es aceptado\n")
-            i+=2
+            print("Error en la linea "+str(numLine)+" El tipo de variable '" + tipo + "' no es aceptado\n")
+            break
 
 addVariableGen("a",'int')
 addFunctionGen("sumar",'int')
-lista = ['int','b','x','int','c','int','o','32','string','nombre']
+lista = ['int','b','a','string','valor','int','aux','32','float','nombre',"joseph"]
 insertValuesToFunction("sumar",lista,1)
 
 
