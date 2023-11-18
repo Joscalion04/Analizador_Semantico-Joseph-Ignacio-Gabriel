@@ -9,25 +9,37 @@ def lectura(linea, num, operacion, function, functionName, conditional):
     operations = None
     nombre2 = ""
     error = "Linea " + str(num) + " exitosa"
-
     
-
     try:
         tipo , nombre, valor, operacion = Lectura.dataIdentifyTypeToNameToValue(linea)
         if Analisis.isTipo(tipo) == False: 
             error = "Linea " + str(num) + " Error: "+ str(tipo) + " no es un tipo de dato aceptado"
-        elif Analisis.validateGeneral(tipo,valor) == False: 
-            error = "Linea " + str(num) + " Error: "+ str(valor) + " no es un dato aceptable para una variable de tipo " + str(tipo)
+        else: 
+            if Analisis.validateGeneral(tipo,valor) == False: 
+                error = "Linea " + str(num) + " Error: "+ str(valor) + " no es un dato aceptable para una variable de tipo " + str(tipo)
+
             if function ==True:
                 if Analisis.KeyInFunction(functionName, nombre) == False:
-                    Analisis.addVarFunction(functionName, nombre,tipo)
+                    if conditional == True:
+                        if Analisis.keyInIfFunc(functionName, nombre) == False:
+                            Analisis.addVarIfFun(functionName, nombre, tipo)
+                        else: 
+                            error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
+                    else:
+                        Analisis.addVarFunction(functionName, nombre,tipo)
                 else:
                     error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
             else: 
                 if Analisis.KeyInDiccionario(nombre)==False:
-                    Analisis.addVariableGen(nombre,tipo)
+                    if conditional == True:
+                        if Analisis.keyInIfGen(nombre) == False:
+                            Analisis.addVarIfGen(nombre, tipo)
+                        else: 
+                            error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
+                    else:
+                        Analisis.addVariableGen(nombre,tipo)
                 else: 
-                     error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
+                    error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
     except Exception: 
        print("linea sin poder leerse 1")
        pass
@@ -39,14 +51,26 @@ def lectura(linea, num, operacion, function, functionName, conditional):
         else: 
             if function ==True:
                 if Analisis.KeyInFunction(functionName, nombre) == False:
-                    Analisis.addVarFunction(functionName, nombre,tipo)
+                    if conditional == True:
+                        if Analisis.keyInIfFunc(functionName, nombre) == False:
+                            Analisis.addVarIfFun(functionName, nombre, tipo)
+                        else: 
+                            error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
+                    else:
+                        Analisis.addVarFunction(functionName, nombre,tipo)
                 else:
                     error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
             else: 
                 if Analisis.KeyInDiccionario(nombre)==False:
-                    Analisis.addVariableGen(nombre,tipo)
+                    if conditional == True:
+                        if Analisis.keyInIfGen(nombre) == False:
+                            Analisis.addVarIfGen(nombre, tipo)
+                        else: 
+                            error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
+                    else:
+                        Analisis.addVariableGen(nombre,tipo)
                 else: 
-                     error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
+                    error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
     except Exception: 
         print("linea sin poder leerse 2")
         pass  
@@ -56,37 +80,92 @@ def lectura(linea, num, operacion, function, functionName, conditional):
         if Analisis.KeyInDiccionario(nombre) == True: 
             if Analisis.validateGeneral(Analisis.TipoVarEnDiccionario(nombre),valor) == False:
                 error = "Linea " + str(num) + " Error: "+ str(valor) + " no es un dato aceptable para una variable de tipo " + str(tipo)
+        elif Analisis.keyInIfGen(nombre) == True:
+            if Analisis.validateGeneral(Analisis.accesIfGenValues(nombre),valor) == False:
+                error = "Linea " + str(num) + " Error: "+ str(valor) + " no es un dato aceptable para una variable de tipo " + str(tipo)
         elif function == True: 
             if Analisis.KeyInFunction(functionName, nombre) == True:
                 if Analisis.validateGeneral(Analisis.TipoValFuncionEnDiccionario(functionName, nombre)) == False:
                     error = "Linea " + str(num) + " Error: "+ str(valor) + " no es un dato aceptable para una variable de tipo " + str(tipo)
+            elif Analisis.keyInIfFunc(functionName, nombre) == True: 
+                if Analisis.validateGeneral(Analisis.accesIfFuncValues(functionName, nombre)) == False:
+                    error = "Linea " + str(num) + " Error: "+ str(valor) + " no es un dato aceptable para una variable de tipo " + str(tipo)
     except Exception:
         print("linea sin poder leerse 3")
         pass
-  
+  #ready if 
     try:
         nombre, nombre2, operacion = Lectura.dataIdentifyNameToName(line) #Arreglar pq no esta verificando correctamente la comparacion de tipos 
         if Analisis.KeyInDiccionario(nombre) == True: 
             if Analisis.KeyInDiccionario(nombre2) == True:
                 if Analisis.TipoVarEnDiccionario(nombre)!= Analisis.TipoVarEnDiccionario(nombre2) :
                     error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+            elif conditionnal ==True: 
+                if Analisis.keyInIfGen(nombre2) == True :
+                    if Analisis.TipoVarEnDiccionario(nombre) != Analisis.accesIfGenValues(nombre2):
+                        error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
             elif function ==True:
                     if Analisis.KeyInFunction(functionName, nombre2) == True:
                         if Analisis.TipoVarEnDiccionario(nombre) != Analisis.TipoValFuncionEnDiccionario(functionName,nombre2):
                             error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                    elif conditional == True:
+                        if Analisis.KeyInIfFunc(functionName, nombre2) == True: 
+                            if Analisis.TipoVarEnDiccionario(nombre) != Analisis.accesIfFuncValues(functionName, var): 
+                                error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
             else: 
-                error = "Linea " + str(num) + " Error: La variable " + str(valor) + "  no ha sido declarada"
+                error = "Linea " + str(num) + " Error: La variable " + str(nombre2) + "  no ha sido declarada"
+        elif Analisis.keyInIfGen(nombre) == True:
+            if Analisis.KeyInDiccionario(nombre2) == True:
+                if Analisis.accesIfGenValues(nombre)!= Analisis.TipoVarEnDiccionario(nombre2) :
+                    error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+            elif conditionnal ==True: 
+                if Analisis.keyInIfGen(nombre2) == True :
+                    if Analisis.accesIfGenValues(nombre) != Analisis.accesIfGenValues(nombre2):
+                        error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+            elif function ==True:
+                    if Analisis.KeyInFunction(functionName, nombre2) == True:
+                        if Analisis.accesIfGenValues(nombre) != Analisis.TipoValFuncionEnDiccionario(functionName,nombre2):
+                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                    elif conditional == True:
+                        if Analisis.KeyInIfFunc(functionName, nombre2) == True: 
+                            if Analisis.accesIfGenValues(nombre) != Analisis.accesIfFuncValues(functionName, var): 
+                                error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+            else: 
+                error = "Linea " + str(num) + " Error: La variable " + str(nombre2) + "  no ha sido declarada"
         elif function == True:
             if Analisis.KeyInFunction(functionName, nombre) == True:
-                if Analisis.KeyInDiccionario(valor) == True:
-                    if Analisis.TipoValFuncionEnDiccionario(functionName,valor) != Analisis.TipoVarEnDiccionario(valor):
+                if Analisis.KeyInDiccionario(nombre2) == True:
+                    if Analisis.TipoValFuncionEnDiccionario(functionName,nombre) != Analisis.TipoVarEnDiccionario(valor):
                         error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(valor) + " no son compatibles"
-                elif function ==True:
-                    if Analisis.KeyInFunction(functionName, valor) == True:
-                        if Analisis.TipoValFuncionEnDiccionario(functionName,valor)!= Analisis.TipoValFuncionEnDiccionario(functionName,valor):
-                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(valor) + " no son compatibles"
+                elif conditional ==True: 
+                    if Analisis.keyInIfGen(nombre2) == True :
+                        if Analisis.TipoValFuncionEnDiccionario(nombre) != Analisis.accesIfGenValues(nombre2):
+                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                elif Analisis.KeyInFunction(functionName, nombre2) == True:
+                        if Analisis.TipoValFuncionEnDiccionario(functionName,nombre)!= Analisis.TipoValFuncionEnDiccionario(functionName,nombre2):
+                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                elif conditional ==True: 
+                    if Analisis.KeyInIfFunc(functionName, nombre2) == True:
+                        if Analisis.TipoValFuncionEnDiccionario(functionName, nombre) != Analisis.accesIfFunValues(functionName, nombre2):
+                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
                 else: 
-                    error = "Linea " + str(num) + " Error: La variable " + str(valor) + "  no ha sido declarada"
+                    error = "Linea " + str(num) + " Error: La variable " + str(nombre2) + "  no ha sido declarada"
+            elif conditional == True: 
+                if Analisis.KeyInIfFunc(functionName, nombre) == True:
+                    if Analisis.KeyInDiccionario(nombre2) == True:
+                        if Analisis.accesIfFunValues(functionName,nombre) != Analisis.TipoVarEnDiccionario(valor):
+                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(valor) + " no son compatibles"
+                    elif Analisis.keyInIfGen(nombre2) == True :
+                        if Analisis.accesIfFunValues(nombre) != Analisis.accesIfGenValues(nombre2):
+                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                    elif Analisis.KeyInFunction(functionName, nombre2) == True:
+                        if Analisis.accesIfFunValues(functionName,nombre)!= Analisis.TipoValFuncionEnDiccionario(functionName,nombre2):
+                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                    elif Analisis.KeyInIfFunc(functionName, nombre2) == True:
+                        if Analisis.accesIfFunValues(functionName, nombre) != Analisis.accesIfFunValues(functionName, nombre2):
+                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                    else: 
+                        error = "Linea " + str(num) + " Error: La variable " + str(nombre2) + "  no ha sido declarada"
         else : 
             error = "Linea " + str(num) + " Error: La variable " + str(nombre) + "  no ha sido declarada"    
     except Exception:
@@ -109,8 +188,11 @@ def lectura(linea, num, operacion, function, functionName, conditional):
         pass
     
     if Lectura.find_closing_brace(line) == "8": 
-        function = False
-        functionName=None
+        if conditional==True:
+            conditional=False
+        else: 
+            function = False
+            functionName=None
     else: 
         print("linea sin poder leerse 6")
 
@@ -178,7 +260,7 @@ def lectura(linea, num, operacion, function, functionName, conditional):
             Analisis.addIfGen()
         elif function == True:
             Analisis.addIfFunction(functionName)
-            conditional=True
+        conditional=True
     except Exception:
         print("linea sin poder leerse 9")
         pass
@@ -194,7 +276,7 @@ function = False
 functionName = None
 condLoop = False
 for line in lineas: 
-    error, operacion, function, functionName, conditional = lectura(line,numLine, operacion,function, functionName, condLoop )
+    error, operacion, function, functionName, condLoop = lectura(line,numLine, operacion,function, functionName, condLoop )
     print(error)
     numLine += 1
 

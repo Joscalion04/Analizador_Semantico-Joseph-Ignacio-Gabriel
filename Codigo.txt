@@ -1,6 +1,6 @@
  int x = 33.3
    float flota = 22
-  string pobar ="pronar"
+  string pobar ="pronar"    
 string prueba = probando
 x = 22
 int y
@@ -8,10 +8,12 @@ x = pobar
 char letra 
 void funcion(int w, string x ){
   int p 
+  if(x > y) {
+int zzz = 66
+string movido
+zzz = "hola"
+}
   }
 string afuera ="estoyAfuera" 
 x = y + prueba
-if(x > y) {
-int zzz
-string l
-}
+string literal
