@@ -52,22 +52,25 @@ def validateGeneral(tipo, valor):
 
 def verificateTypes(type, operations, functionName, lineNum):
     for operation in operations:
-        if verificationTypeVar(type,operation,functionName, lineNum) != False:
+        if verificationTypeVar(type,operation,functionName, lineNum) == 3:
             if validateGeneral(type, operation) == False:
-                print("Linea " + str(lineNum) + "Error: La variable" + str(operation) + " no es un valor valido")
+                print("Linea " + str(lineNum) + "Error: La variable " + str(operation) + " no es un valor valido")
 
 def verificationTypeVar(type, name, functionName, linenum): 
     if KeyInDiccionario(name): 
         if type != TipoVarEnDiccionario(name):
             print("Linea " + str(linenum) + "Error: La variable" + str(name) + " no es un valor valido")
-            return False
+            return 1
+        else:
+           return 2
     elif functionName != None:
         if KeyInFunction(functionName,name) == True:
             if type != TipoValFuncionEnDiccionario(functionName, name): 
                 print("Linea " + str(linenum) + "Error: La variable" + str(name) + " no es un valor valido")
-                return False
+                return 1
+           
     else: 
-        return True        
+        return 3        
 
 def addVariableGen(name,type): 
     diccionarioGen[name]= ("var",type)
@@ -169,7 +172,7 @@ def TipoVarEnDiccionario(key):
     return  diccionarioGen[key][1]
     
 def TipoValFuncionEnDiccionario(funName,key):
-    return diccionarioGen[funName][2][key][1]
+    return diccionarioGen[funName][2][key]
 
 def insertValuesToFunction(nameFunction, values, numLine):
     i = 0
@@ -219,35 +222,18 @@ addFunctionGen("sumar",'int')
 lista = ['int','b','x','int','c','int','o','32','string','nombre']
 insertValuesToFunction("sumar",lista,1)
 
-#addIfGen()
-#addWhileGen()
 
-#addVarWhileGen("messi","int")
-#addVarIfGen("Cristiano","void")
+addVariableGen("uno","int")
+addVariableGen("dos","int")
+addVariableGen("tres","int")
 
+addFunctionGen("messi","void")
+addVarFunction("messi","cuatro","string")
 
-#addFunctionGen("main","void")
-
-#addIfFunction("main")
-#addWhileFunction("main")
-
-
-
-#addVarIfFun("main","diaz","float")
-#addVarWhileFun("main","gabo","string")
-
-#print(accesIfFuncValues("main","diaz"))
-#print(accesWhileFuncValues("main","gabo"))
-#print(accesIfGenValues("Cristiano"))
-#print(accesWhileGenValues("messi"))
-
-#print(keyInIfGen("Cristian"))
-#print(keyInWhileGen("mess"))
-
-#print(keyInIfFunc("main","dias"))
-#print(keyInWhileFunc("main","gab"))
-
-#print(validateString('messi goat\n'))
+Operations=["uno","dos","tres","cuatro"]
+print(verificateTypes("string",Operations,"messi",2))
+#print(TipoValFuncionEnDiccionario("messi","cuatro"))
+#print(validateString('" messi goat" \n'))
 
 
     
