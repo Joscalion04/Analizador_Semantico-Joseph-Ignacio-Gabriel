@@ -17,7 +17,7 @@ def separateWords(text):
 
 
 # Tipo nombre = valor
-def dataIdentifyTypeToNameToValue(text): #1 JOSEPH <------------- CHECK ------------
+def dataIdentifyTypeToNameToValue(text):# ------------------------------- Operacion 1
     try: 
         patron = r"(\w+)\s+(\w+)\s*=\s*(.+)"
         dataValue = "" 
@@ -38,7 +38,7 @@ def dataIdentifyTypeToNameToValue(text): #1 JOSEPH <------------- CHECK --------
         return None
     
 # Tipo nombre 
-def dataIdentifyTypeToName(text): #2 JOSEPH <------------- CHECK ------------
+def dataIdentifyTypeToName(text): # ------------------------------- Operacion 2
     try: 
         if len(text.split()) != 2: 
             raise ValueError("Invalid number of words. Expected 2.") 
@@ -52,7 +52,7 @@ def dataIdentifyTypeToName(text): #2 JOSEPH <------------- CHECK ------------
         return None  
 
 # nombre = valor
-def dataIdentifyNameToValue(text): #3
+def dataIdentifyNameToValue(text): # ------------------------------- Operacion 3
     if len(text.split()) >3:
             return None
     patron = r"([A-Za-z]+)\s*=\s*([0-9_]+)\s*$"
@@ -68,7 +68,7 @@ def dataIdentifyNameToValue(text): #3
         return None
 
 # nombre = nombre 
-def dataIdentifyNameToName(text):  #4
+def dataIdentifyNameToName(text): # ------------------------------- Operacion 4
     if len(text.split()) > 3:
            return None
     patron = r"([A-Za-z]+)\s*=\s*([A-Za-z]+)\s*$"
@@ -81,7 +81,7 @@ def dataIdentifyNameToName(text):  #4
         return None
 
 #tipo nombreFuncion(parametros) {
-def dataIdentifyWithParenthesis(text): #5 JOSEPH <------------- CHECK ------------
+def dataIdentifyWithParenthesis(text): # ------------------------------- Operacion 5
     patron = r"(\w+)\s+(\w+)\s*\(\s*(.*)\s*\)\s*(\{)?"
     dataType = ""
     dataName = ""
@@ -97,7 +97,7 @@ def dataIdentifyWithParenthesis(text): #5 JOSEPH <------------- CHECK ----------
         return None
 
 #}
-def find_closing_brace(line):
+def find_closing_brace(line): # ------------------------------- Operacion 8
     if "}" in line:
         closing_brace_index = line.index("}")
         rest_of_line = line[closing_brace_index + 1:].strip()
@@ -110,7 +110,7 @@ def find_closing_brace(line):
         return None
 
 # tipo nombre = valor, tipo nombre 
-def variablesDeLasFunciones(text):
+def variablesDeLasFunciones(text): 
     parameters=[]
     line = text
     line=line.replace(",",'')
@@ -135,32 +135,32 @@ def variablesDeLasFunciones(text):
     return parameters      
 
 # a = operacion (1 + x + 7)
-def dataNametoOperation(text): # JOSEPH <-------------UN- CHECK ------------
+def dataNametoOperation(text): # ------------------------------- Operacion 6
     try:
-        patron = r"(\w+)\s*=\s*((\w+(\s*[\+\-\*/]\s*\w+)+))"
+        patron = r"(\w+)\s*=\s*(([\w.]+(\s*[\+\-\*/]\s*[\w.]+)+))"
         resultado = re.search(patron, text)
         if resultado and resultado.start() == 0:
             dato = resultado.group(1)
             operacion = resultado.group(2)
-            if not re.match(r'^\w+(\s*[\+\-\*/]\s*\w+)+$', operacion):
+            if not re.match(r'^[\w.]+(\s*[\+\-\*/]\s*[\w.]+)+$', operacion):
                 return None
             operandos = re.split(r'\s*[\+\-\*/]\s*', operacion)
-            return dato, operandos, "8"  
+            return dato, operandos, "6"  
         else:
             return None
     except Exception:
         return None
     
 # int x = operacion 
-def dataTypeNameToOperation(text): # JOSEPH <-------------UN- CHECK ------------
+def dataTypeNameToOperation(text):# ------------------------------- Operacion 9
     try:
-        patron = r"(\w+)\s+(\w+)\s*=\s*((\w+(\s*[\+\-\*/]\s*\w+)+))"
+        patron = r"(\w+)\s+(\w+)\s*=\s*(([\w.]+(\s*[\+\-\*/]\s*[\w.]+)+))"
         resultado = re.search(patron, text)
         if resultado and resultado.start() == 0:
             dataType = resultado.group(1)
             nameData = resultado.group(2)
             operators = resultado.group(3)
-            if not re.match(r'^\w+(\s*[\+\-\*/]\s*\w+)+$', operators):
+            if not re.match(r'^[\w.]+(\s*[\+\-\*/]\s*[\w.]+)+$', operators):
                 return None
             operators = re.split(r'\s*[\+\-\*/]\s*', operators)
             return dataType, nameData, operators, "9"  
@@ -170,7 +170,7 @@ def dataTypeNameToOperation(text): # JOSEPH <-------------UN- CHECK ------------
         return None
 
 #if ( x > y ) falta ==
-def conditionalDetection(text):# JOSEPH <-------------CHECK ------------
+def conditionalDetection(text):# ------------------------------- Operacion 10
     try: 
         patron = r"^\s*if\s*\(\s*(\w+)\s*([<>]=?|==|!=)\s*(\w+)\s*\)\s*{?$"
         resultado = re.search(patron, text) 
@@ -184,21 +184,21 @@ def conditionalDetection(text):# JOSEPH <-------------CHECK ------------
         return None 
 
 #while( x > y)  arreglar =  
-def loopDetection(text):# JOSEPH <-------------CHECK ------------
+def loopDetection(text): # ------------------------------- Operacion 11
     try:
         patron = r"^\s*while\s*\(\s*(\w+)\s*([<>]=?|==|!=)\s*(\w+)\s*\)\s*{?$"
         resultado = re.search(patron, text)
         if resultado:
             value1 = resultado.group(1)
             value2 = resultado.group(3)
-            return "while", value1, value2,"10"
+            return "while", value1, value2,"11"
         else:
             return None
     except Exception:
         return None
 
 # int x = suma(x,y,z) arreglar 
-def dataToNameToFunction(text): # JOSEPH <-------------CHECK ------------
+def dataToNameToFunction(text): # ------------------------------- Operacion 12
     pattern = r"(\w+)\s+(\w+)\s*=\s*(\w+)\s*\(\s*(.*?)\s*\)"
     match = re.match(pattern, text)
     if match:
@@ -214,7 +214,7 @@ def dataToNameToFunction(text): # JOSEPH <-------------CHECK ------------
         return None
 
 # x = suma(x,y,z ) terminar de probar 
-def nameToFunction(text): # JOSEPH <-------------CHECK ------------
+def nameToFunction(text): # ------------------------------- Operacion 13
     pattern = r"(\w+)\s*=\s*(\w+)\s*\(\s*(.*?)\s*\)"
     match = re.match(pattern, text)
     if match:
@@ -254,5 +254,5 @@ def validaLinea(linea):
         print("ERROR DE LINEA")
 
 
-linea = "x = y"
-#validaLinea(linea)
+linea = "float x = a + 23.5 + 24.5 + ba"
+validaLinea(linea)
