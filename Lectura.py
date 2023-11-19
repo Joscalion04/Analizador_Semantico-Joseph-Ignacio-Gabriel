@@ -227,12 +227,12 @@ def nameToFunction(text): # ------------------------------- Operacion 13
 
 def returnDetect(text): # ------------------------------- Operacion 14
     try:
-        patron = r"^\s*return\s+(\w+(\s*[\+\-\*/]\s*\w+)*)\s*$"
+        patron = r"^\s*return\s+(['\"]?\w+['\"]?\s*[\+\-\*/]\s*(['\"]?\w+['\"]?)*)\s*$"
         resultado = re.search(patron, text)
         if resultado:
             expresion = resultado.group(1)
             # Verificar que no haya palabras antes o después del return y que los valores estén separados por operadores
-            if re.match(r"^\w+(\s*[\+\-\*/]\s*\w+)*$", expresion):
+            if re.match(r"^['\"]?\w+['\"]?(\s*[\+\-\*/]\s*['\"]?\w+['\"]?)*$", expresion):
                 # Eliminar espacios en blanco de cada elemento antes de agregarlo a la lista
                 valores = [valor.strip() for valor in re.split(r'[\+\-\*/]', expresion)]
                 return valores, "14"
@@ -241,13 +241,3 @@ def returnDetect(text): # ------------------------------- Operacion 14
         return None
 
 # ---------------------------------- DATOS Y PRUEBAS LECTURA.PY --------------------------------------
-
-# Ejemplo de uso
-linea = "return 12 + a + 89 - 97 * 56 / valor  "
-
-if returnDetect(linea):
-    valores,num = returnDetect(linea)
-    print(valores)
-    print(num)
-else:
-    print("No se encontró una expresión de retorno válida.")
