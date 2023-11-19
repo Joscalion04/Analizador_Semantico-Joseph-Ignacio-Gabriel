@@ -225,34 +225,28 @@ def nameToFunction(text): # ------------------------------- Operacion 13
     else:
         return None
 
+def returnDetect(text): # ------------------------------- Operacion 14
+    try:
+        patron = r"^\s*return\s+(\w+(\s*[\+\-\*/]\s*\w+)*)\s*$"
+        resultado = re.search(patron, text)
+        if resultado:
+            expresion = resultado.group(1)
+            # Verificar que no haya palabras antes o después del return y que los valores estén separados por operadores
+            if re.match(r"^\w+(\s*[\+\-\*/]\s*\w+)*$", expresion):
+                valores = re.split(r'[\+\-\*/]', expresion)
+                return valores, "14"
+        return None
+    except Exception:
+        return None
+
 # ---------------------------------- DATOS Y PRUEBAS LECTURA.PY --------------------------------------
-def validaLinea(linea):
-    if dataTypeNameToOperation(linea):
-        tipo_dato, nombre_dato, operadores,num = dataTypeNameToOperation(linea)
-        print("Tipo de Dato:", tipo_dato)
-        print("Nombre del Dato:", nombre_dato)
-        print("Operadores:", operadores)
-        print("Numero de Operacion: "+num)
-    elif dataNametoOperation(linea):
-        dato, operandos,num = dataNametoOperation(linea)
-        print("Dato:", dato)
-        print("Operandos:", operandos)
-        print("Numero de Operacion: "+num)
-    elif conditionalDetection(linea):
-        condicion, valor1, valor2,num = conditionalDetection(linea)
-        print("Condicional: " + condicion)
-        print("Valor 1: " + valor1)
-        print("Valor 2: " + valor2)
-        print("Numero de Operacion: "+num)
-    elif loopDetection(linea):
-        loop, valor1, valor2,num = loopDetection(linea)
-        print("Condicional: " + loop)
-        print("Valor 1: " + valor1)
-        print("Valor 2: " + valor2)
-        print("Numero de Operacion: "+num)
-    else :
-        print("ERROR DE LINEA")
 
+# Ejemplo de uso
+linea = "return 12 + a + 89 - 97 * 56 / valor  "
 
-linea = "float x = a + 23.5 + 24.5 + ba"
-validaLinea(linea)
+if returnDetect(linea):
+    valores,num = returnDetect(linea)
+    print(valores)
+    print(num)
+else:
+    print("No se encontró una expresión de retorno válida.")
