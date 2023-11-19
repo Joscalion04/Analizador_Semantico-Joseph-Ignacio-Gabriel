@@ -13,6 +13,12 @@ def isTipo(word):
         return True
     else:  
         return False
+    
+def isTipoVar(word):
+    if word in tiposDatos and word !='void':
+        return True
+    else:
+        return False
 
 #Validates de los tipos de variable permitidas (int, float, string)
 def validateInt(value): 
@@ -96,6 +102,8 @@ def verificationTypeVar(type, name, functionName, linenum):
                 return 1
             else: 
                 return 2
+        else:
+            return 3
     else: 
         return 3        
 
@@ -313,28 +321,29 @@ validateReturnValuesFunction("sumar",retornos,2)
 #insertValuesToFunction("sumar",lista,1)
 
 
-#addVariableGen("uno","string")
-#addVariableGen("dos","int")
-#addVariableGen("tres","int")
+addVariableGen("uno","int")
+addVariableGen("dos","int")
+addVariableGen("tres","int")
 
-#addFunctionGen("messi","void")
-#addVarFunction("messi","cuatro","int")
+addFunctionGen("messi","void")
+addVarFunction("messi","cuatro","int")
 
-#addIfGen()
-#addIfFunction("messi")
+addIfGen()
+addIfFunction("messi")
 
-#addVarIfGen("cinco","int")
-#addVarIfFun("messi","seis","int")
-#addWhileGen()
-#addWhileFunction("messi")
+addVarIfGen("cinco","int")
+addVarIfFun("messi","seis","int")
+addWhileGen()
+addWhileFunction("messi")
 
-#addVarWhileGen("siete","int")
-#addVarWhileFun("messi","ocho","string")
+addVarWhileGen("siete","int")
+addVarWhileFun("messi","ocho","int")
 
 
 
-#Operations=["uno","dos","tres","cuatro","cinco","seis","siete","ocho"]
-#verificateTypes("int",Operations,"messi",2)
+#Operations=["uno","3.9","'ou'","cuatro","5","seis","siete","8"]
+#verificateTypes("string",Operations,"messi",2)
+#print(isTipoVar('void'))
 #print(TipoValFuncionEnDiccionario("messi","cuatro"))
 #print(validateString('"pronar"   \t '))
 
