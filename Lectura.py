@@ -233,7 +233,8 @@ def returnDetect(text): # ------------------------------- Operacion 14
             expresion = resultado.group(1)
             # Verificar que no haya palabras antes o después del return y que los valores estén separados por operadores
             if re.match(r"^\w+(\s*[\+\-\*/]\s*\w+)*$", expresion):
-                valores = re.split(r'[\+\-\*/]', expresion)
+                # Eliminar espacios en blanco de cada elemento antes de agregarlo a la lista
+                valores = [valor.strip() for valor in re.split(r'[\+\-\*/]', expresion)]
                 return valores, "14"
         return None
     except Exception:

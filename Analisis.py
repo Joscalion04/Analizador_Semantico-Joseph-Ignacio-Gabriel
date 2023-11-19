@@ -272,6 +272,40 @@ def insertValuesToFunction(nameFunction, values, numLine):
             print("Error en la linea "+str(numLine)+" El tipo de variable '" + tipo + "' no es aceptado\n")
             break
 
+def validateReturnValuesFunction(nameFunction, values, numLine):
+    for value in values:
+        if KeyInFunction(nameFunction,value):
+           if TipoValFuncionEnDiccionario(nameFunction,value) != TipoVarEnDiccionario(nameFunction):
+              print("Linea " + str(numLine) + " Error: La variable '" + str(value) + "' no es un valor de retorno correcto")
+              break
+        elif KeyInDiccionario(value):
+            if TipoVarEnDiccionario(value)  != TipoVarEnDiccionario(nameFunction):
+                print("Linea " + str(numLine) + " Error: La variable '" + str(value) + "' no es un valor de retorno correcto")
+                break
+        elif validateString(value):
+            if TipoVarEnDiccionario(nameFunction) != 'string':
+                print("Linea " + str(numLine) + " Error: La variable '" + str(value) + "' no es un valor de retorno correcto")
+                break
+        elif validateFloat(value):
+            if TipoVarEnDiccionario(nameFunction) != 'float':
+                print("Linea " + str(numLine) + " Error: La variable '" + str(value) + "' no es un valor de retorno correcto")
+                break   
+        elif validateInt(value):
+            if TipoVarEnDiccionario(nameFunction) != 'int':
+                print("Linea " + str(numLine) + " Error: La variable '" + str(value) + "' no es un valor de retorno correcto")
+                break 
+
+
+import Lectura
+
+addVariableGen("aux",'int')
+addFunctionGen("sumar",'int')
+lista = ['string','a','string','b']
+insertValuesToFunction("sumar",lista,1)
+
+linea = 'return a + 32'
+retornos,op = Lectura.returnDetect(linea)
+validateReturnValuesFunction("sumar",retornos,2)
 
 #addVariableGen("a",'int')
 #addFunctionGen("sumar",'int')
