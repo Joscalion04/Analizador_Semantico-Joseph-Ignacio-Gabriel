@@ -672,3 +672,42 @@ for line in lineas:
     numLine += 1
 
 print(Analisis.diccionarioGen)
+
+
+try: # int x = suma(x,y,z) 
+        tipo, nombre, nombre_Func, params_string , num = Lectura.dataToNameToFunction(linea)
+        if Analisis.KeyInDiccionario(nombre):
+            error  = "Linea " + str(num) + " Error: La variable " + str(nombre) + "  ya ha sido declarada"
+        elif not Analisis.KeyInDiccionario(nombre_Func):
+            error  = "Linea " + str(num) + " Error: La funcion " + str(nombre_Func) + "  no ha sido declarada"
+        elif Analisis.TipoVarEnDiccionario(nombre_Func) == 'void':
+            error  = "Linea " + str(num) + " Error: La funcion " + str(nombre_Func) + "  no retorna un valor"
+        elif Analisis.TipoVarEnDiccionario(nombre_Func) != tipo:
+             error  = "Linea " + str(num) + " Error: La funcion " + str(nombre_Func) + "  retorna un tipo de valor incompatible con '"+nombre+"' "
+        else:
+            error  = "Linea " + str(num) + " Error: El tipo de dato " + str(tipo) + "  no existe"
+    except Exception: 
+        print("linea sin poder leerse 10")
+        pass
+
+    try: #x = suma(x,y,z ) terminar de probar 
+        nombre, nombre_funcio, params_string, num = Lectura.nameToFunction(linea)
+        if Analisis.KeyInDiccionario(nombre):
+            if not Analisis.KeyInDiccionario(nombre_funcio):
+                error  = "Linea " + str(num) + " Error: La funcion " + str(nombre_funcio) + "  no ha sido declarada"
+            elif Analisis.TipoVarEnDiccionario(nombre_funcio) == 'void':
+                error  = "Linea " + str(num) + " Error: La funcion " + str(nombre_funcio) + "  no retorna un valor"
+            elif Analisis.TipoVarEnDiccionario(nombre_funcio) != Analisis.TipoVarEnDiccionario(nombre):
+                 error  = "Linea " + str(num) + " Error: La funcion " + str(nombre_funcio) + "  retorna un tipo de valor incompatible con '"+nombre+"' "
+        else:
+            error  = "Linea " + str(num) + " Error: La variable '" + str(nombre) + "'  no existe"
+    except Exception:
+        print("linea sin poder leerse 3")
+        pass
+
+    try:
+        valores, num = Lectura.returnDetect(linea)
+        Analisis.validateReturnValuesFunction(functionName,valores,num)
+    except Exception:
+        print("linea sin poder leerse 3")
+        pass
