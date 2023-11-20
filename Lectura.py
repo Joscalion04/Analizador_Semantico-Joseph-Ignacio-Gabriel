@@ -15,14 +15,7 @@ def read(archivo):
     return lineas
 
 
-def separateWords(text): 
-    words=[]
-    lines = text.split('\n')
-    for line in lines:
-        if line != '\n': 
-            lineWords = line.split(' ')
-            words.extend(lineWords)
-    return words 
+
 
 """
 dataIdentifyTypeToNameToValue es un metodo dedicado a la lectura de una linea para
@@ -126,7 +119,7 @@ Parametros:
 Devolucion: 
 - String : tipo de dato, nombre del dato, parametros, numero de Operacion de Estructuracion
 """
-#tipo nombreFuncion(parametros) {
+
 def dataIdentifyWithParenthesis(text): # ------------------------------- Operacion 5
     patron = r"(\w+)\s+(\w+)\s*\(\s*(.*)\s*\)\s*(\{)?"
     dataType = ""
@@ -145,6 +138,7 @@ def dataIdentifyWithParenthesis(text): # ------------------------------- Operaci
 """
 find_closing_brace es un metodo dedicado a la lectura de una linea para
  detectar si dentro de esa linea hay una llave de cierre
+Parametros:
 (String) - text: linea a leer
 Devolucion: 
 - String : Numero de Operacion de Estructuracion
@@ -161,7 +155,17 @@ def find_closing_brace(line): # ------------------------------- Operacion 8
     else:
         return None
 
+"""
+VariablesDeLasFunciones es un metodo que ingresa la informacion de los datos
+que corresponden a los parametros de una funcion dentro de una lista.
+si text es = int x, y, z=0, el metodo retorna la siguiente lista: [int,x,y,z,0]
 
+Parametros:
+-text(string): string con los parametros de una funcion 
+
+Devolucion:
+-lista: datos de los parametros de la funcion
+"""
 def variablesDeLasFunciones(text): 
     parameters=[]
     line = text
