@@ -1,14 +1,8 @@
-string prueba = probando
-prueba = 22
-int prueba
-void funcion(int w, string x ){
-  int p 
-while(x > y) {
-  int zzz = 66
-  string movido
-  string zzz
-  float probandolo
-  int prueba = 2020
-  zzz = "hola"
-}
-}
+x =40
+
+void funcion(float v, string n) {
+  if(v > 0){
+    n = "Mayor"
+    x = x + 5
+  }
+} 

@@ -15,7 +15,20 @@ def lectura(linea, num, operacion, function, functionName, conditional):
         if Analisis.isTipo(tipo) == False: 
             error = "Linea " + str(num) + " Error: "+ str(tipo) + " no es un tipo de dato aceptado"
         else: 
-            if Analisis.validateGeneral(tipo,valor) == False: 
+            if function ==True:
+                if Analisis.KeyInFunction(functionName, nombre) == False:
+                    if conditional == True:
+                        if Analisis.KeyInFunction(functionName,"if")==True:
+                            if Analisis.keyInIfFunc(functionName, nombre) == False and Analisis.KeyInDiccionario(nombre) == False and Analisis.KeyInFunction(functionName,nombre)==False:
+                                Analisis.addVarIfFun(functionName, nombre, tipo)
+                        elif Analisis.KeyInFunction(functionName,"while")==True:
+                            if Analisis.keyInWhileFunc(functionName, nombre) == False and Analisis.KeyInDiccionario(nombre) == False and Analisis.KeyInFunction(functionName,nombre)==False:
+                                Analisis.addVarWhileFun(functionName,nombre, tipo)
+                        else: 
+                            error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
+                    else:
+                        Analisis.addVarFunction(functionName, nombre,tipo)
+            elif Analisis.validateGeneral(tipo,valor) == False: 
                 error = "Linea " + str(num) + " Error: "+ str(valor) + " no es un dato aceptable para una variable de tipo " + str(tipo)
             if Analisis.KeyInDiccionario(nombre)==False:
                 if conditional == True:
@@ -31,23 +44,11 @@ def lectura(linea, num, operacion, function, functionName, conditional):
                              error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
                 else: 
                     Analisis.addVariableGen(nombre,tipo) 
-            elif function ==True:
-                if Analisis.KeyInFunction(functionName, nombre) == False:
-                    if conditional == True:
-                        if Analisis.KeyInFunction(functionName,"if")==True:
-                            if Analisis.keyInIfFunc(functionName, nombre) == False:
-                                Analisis.addVarIfFun(functionName, nombre, tipo)
-                        elif Analisis.KeyInFunction(functionName,"while")==True:
-                            if Analisis.keyInWhileFunc(functionName, nombre) == False:
-                                Analisis.addVarWhileFun(functionName,nombre, tipo)
-                        else: 
-                            error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
-                    else:
-                        Analisis.addVarFunction(functionName, nombre,tipo)
+            
             else:
                 error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"                
     except Exception: 
-       print("linea sin poder leerse 1")
+      # print("linea sin poder leerse 1")
        pass
 
     try:
@@ -92,7 +93,7 @@ def lectura(linea, num, operacion, function, functionName, conditional):
                 else: 
                     error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
     except Exception: 
-        print("linea sin poder leerse 2")
+       # print("linea sin poder leerse 2")
         pass  
     
     try:
@@ -124,8 +125,10 @@ def lectura(linea, num, operacion, function, functionName, conditional):
                     if Analisis.keyInWhileGen(nombre) == True:
                         if Analisis.validateGeneral(Analisis.accesWhileGenValues(nombre),valor) ==False:
                             error = "Linea " + str(num) + " Error: "+ str(valor) + " no es un dato aceptable para una variable de tipo " + str(Analisis.accesWhileGenValues(nombre))
+        else:
+            error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que no ha sido declarada"
     except Exception:
-        print("linea sin poder leerse 3")
+        #print("linea sin poder leerse 3")
         pass
 
   #ready if 
@@ -297,7 +300,7 @@ def lectura(linea, num, operacion, function, functionName, conditional):
         else : 
             error = "Linea " + str(num) + " Error: La variable " + str(nombre) + "  no ha sido declarada"    
     except Exception:
-        print("linea sin poder leerse 4")
+       # print("linea sin poder leerse 4")
         pass
 
     try: 
@@ -312,7 +315,7 @@ def lectura(linea, num, operacion, function, functionName, conditional):
             function=True
             functionName=nombre        
     except Exception:
-        print("linea sin poder leerse 5")
+        #print("linea sin poder leerse 5")
         pass
     
     if Lectura.find_closing_brace(line) == "8": 
@@ -322,7 +325,8 @@ def lectura(linea, num, operacion, function, functionName, conditional):
             function = False
             functionName=None
     else: 
-        print("linea sin poder leerse 6")
+        pass
+        #print("linea sin poder leerse 6")
 
     try: 
         nombre, operations, operacion = Lectura.dataNametoOperation(line) 
@@ -344,7 +348,7 @@ def lectura(linea, num, operacion, function, functionName, conditional):
         else:
             error =  "Linea " + str(num) + " Error: "+ nombre + " no es una variable que haya sido declarada"
     except Exception:
-        print("linea sin poder leerse 7")
+        #print("linea sin poder leerse 7")
         pass
     
     try:
@@ -354,23 +358,33 @@ def lectura(linea, num, operacion, function, functionName, conditional):
         else:
             if function ==True:
                 if conditional ==True:
-                    if Analisis.keyInIfFunc(functionName, nombre) == False:
-                        Analisis.addVarIfFun(functionName, nombre,tipo)
+                    if Analisis.KeyInFunction(functionName,"if"): 
+                        if Analisis.keyInIfFunc(functionName, nombre) == False:
+                            Analisis.addVarIfFun(functionName, nombre,tipo)
+                        else:
+                            error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
+                    elif Analisis.KeyInFunction(functionName,"while"):
+                        if Analisis.keyInWhileFunc(functionName,nombre)==False:
+                            Analisis.addVarWhileFun(functionName,nombre,tipo)
                 elif Analisis.KeyInFunction(functionName, nombre) == False:
                     Analisis.addVarFunction(functionName, nombre,tipo)
                 else:
                     error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
             else: 
                 if conditional ==True:
-                    if Analisis.keyInIfFunc(functionName, nombre) == False:
-                        Analisis.addVarIfFun(functionName, nombre,tipo)
+                    if Analisis.KeyInDiccionario("if")==True:
+                        if Analisis.keyInIfGen(nombre) == False:
+                            Analisis.addVarIfGen(nombre,tipo)
+                    elif Analisis.KeyInDiccionario("while")==True:
+                        if Analisis.keyInWhileGen(nombre)==True:
+                            Analisis.addVarWhileGen(nombre,tipo)
                 elif Analisis.KeyInDiccionario(nombre)==False:
                     Analisis.addVariableGen(nombre,tipo)
                 else: 
                      error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
         Analisis.verificateTypes(tipo, operations, functionName, num)
     except Exception:
-        print("linea sin poder leerse 8")
+        #print("linea sin poder leerse 8")
         pass
 
     try:
@@ -449,11 +463,12 @@ def lectura(linea, num, operacion, function, functionName, conditional):
             error = "Linea " + str(num) + " Error: La variable " + str(nombre) + "  no ha sido declarada"  
         if function ==False:
             Analisis.addIfGen()
+            conditional=True
         elif function == True:
             Analisis.addIfFunction(functionName)
-        conditional=True
+            conditional=True
     except Exception:
-        print("linea sin poder leerse 9")
+        #print("linea sin poder leerse 9")
         pass
 
     try:
@@ -536,7 +551,7 @@ def lectura(linea, num, operacion, function, functionName, conditional):
             Analisis.addWhileFunction(functionName)
         conditional=True
     except Exception: 
-        print("linea sin poder leerse 10")
+        #print("linea sin poder leerse 10")
         pass
     
 

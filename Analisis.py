@@ -117,39 +117,42 @@ def verificationTypeVar(type, name, functionName, linenum):
             return 1
         else:
            return 2
-    elif keyInIfGen(name)==True:
-        if type!=accesIfGenValues(name):
-            print ("Linea "+str(linenum)+" Error: La variable "+str(name)+" no es un valor valido")
-            return 1
-        else:
-            return 2
-    elif keyInWhileGen(name)==True:
-        if type!=accesWhileGenValues(name):
-            print ("Linea "+str(linenum)+" Error: La variable "+str(name)+" no es un valor valido")
-        else:
-            return 2
+    elif KeyInDiccionario("if")==True:
+        if keyInIfGen(name)==True:
+            if type!=accesIfGenValues(name):
+                print ("Linea "+str(linenum)+" Error: La variable "+str(name)+" no es un valor valido")
+                return 1
+            else:
+                return 2
+    elif KeyInDiccionario("while")==True:
+        if keyInWhileGen(name)==True:
+            if type!=accesWhileGenValues(name):
+                print ("Linea "+str(linenum)+" Error: La variable "+str(name)+" no es un valor valido")
+            else:
+                return 2
     elif functionName != None:
         if KeyInFunction(functionName,name) == True:
             if type != TipoValFuncionEnDiccionario(functionName, name): 
                 print("Linea " + str(linenum) + " Error: La variable " + str(name) + " no es un valor valido")
                 return 1 
-        elif keyInIfFunc(functionName,name)==True:
-            if type != accesIfFuncValues(functionName,name):
-                print ("Linea "+str(linenum)+" Error: La variable "+str(name)+" no es un valor valido")
-                return 1
-            else: 
-                return 2
-        elif keyInWhileFunc(functionName,name)==True:
-            if type != accesWhileFuncValues(functionName,name):
-                print ("Linea "+str(linenum)+" Error: La variable "+str(name)+" no es un valor valido")
-                return 1
-            else: 
-                return 2
-        else:
-            return 3
+        elif KeyInFunction(functionName,"if")==True:
+            if keyInIfFunc(functionName,name)==True:
+                if type != accesIfFuncValues(functionName,name):
+                    print ("Linea "+str(linenum)+" Error: La variable "+str(name)+" no es un valor valido")
+                    return 1
+                else: 
+                    return 2
+        elif KeyInFunction(functionName,"while")==True:
+            if keyInWhileFunc(functionName,name)==True:
+                if type != accesWhileFuncValues(functionName,name):
+                    print ("Linea "+str(linenum)+" Error: La variable "+str(name)+" no es un valor valido")
+                    return 1
+                else: 
+                    return 2
+            else:
+                return 3
     else: 
         return 3        
-
 """
 addVariableGen, addFunctionGen, son metodos para agregar variables o funciones al diccionario General
 Parametros: 
