@@ -380,6 +380,16 @@ Devolucion:
 def TipoValFuncionEnDiccionario(funName,key):
     return diccionarioGen[funName][2][key]
 
+"""
+insertValuesToFunction es un metodo dedicado al analisis de una lista de valores respecto a los parametros de una funcion,
+ esta recorre la lista de valores y verifica todas sus posibles validaciones
+Parametros: 
+(String) - nameFunction: nombre de funcion
+(lista) - Lista de valores de parametros
+(Int) - Numero de Linea
+Devolucion: 
+-Imprime los posibles errores relacionadoss
+"""
 def insertValuesToFunction(nameFunction, values, numLine):
     i = 0
     while i < len(values):
@@ -433,6 +443,16 @@ def insertValuesToFunction(nameFunction, values, numLine):
             print("Error en la linea "+str(numLine)+" El tipo de variable '" + tipo + "' no es aceptado\n")
             break
 
+"""
+validateReturnValuesFunction es un metodo dedicado al analisis de una lista de valores respecto al retorno de una funcion,
+ esta recorre la lista de valores y verifica todas sus posibles validaciones
+Parametros: 
+(String) - nameFunction: nombre de funcion
+(lista) - Lista de valores de parametros
+(Int) - Numero de Linea
+Devolucion: 
+-Imprime los posibles errores relacionadoss
+"""
 def validateReturnValuesFunction(nameFunction, values, numLine):
     for value in values:
         if KeyInFunction(nameFunction,value):
@@ -455,50 +475,3 @@ def validateReturnValuesFunction(nameFunction, values, numLine):
             if TipoVarEnDiccionario(nameFunction) != 'int':
                 print("Linea " + str(numLine) + " Error: La variable '" + str(value) + "' no es un valor de retorno correcto")
                 break 
-
-
-import Lectura
-
-addVariableGen("aux",'int')
-addFunctionGen("sumar",'int')
-lista = ['string','a','string','b']
-insertValuesToFunction("sumar",lista,1)
-
-linea = 'return a + 32'
-retornos,op = Lectura.returnDetect(linea)
-validateReturnValuesFunction("sumar",retornos,2)
-
-#addVariableGen("a",'int')
-#addFunctionGen("sumar",'int')
-#lista = ['int','b','x','int','c','int','o','32','string','nombre']
-#insertValuesToFunction("sumar",lista,1)
-
-
-addVariableGen("uno","int")
-addVariableGen("dos","int")
-addVariableGen("tres","int")
-
-addFunctionGen("messi","void")
-addVarFunction("messi","cuatro","int")
-
-addIfGen()
-addIfFunction("messi")
-
-addVarIfGen("cinco","int")
-addVarIfFun("messi","seis","int")
-addWhileGen()
-addWhileFunction("messi")
-
-addVarWhileGen("siete","int")
-addVarWhileFun("messi","ocho","int")
-
-
-
-#Operations=["uno","3.9","'ou'","cuatro","5","seis","siete","8"]
-#verificateTypes("string",Operations,"messi",2)
-#print(isTipoVar('void'))
-#print(TipoValFuncionEnDiccionario("messi","cuatro"))
-#print(validateString('"pronar"   \t '))
-
-
-    

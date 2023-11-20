@@ -1,10 +1,19 @@
 #Lectura de archivos
 import re
 
+"""
+read es un metodo dedicado a la lectura del documento, se encarga de insertar cada linea por separado en una lista, 
+a su vez elimina los espacios en blancos al inicio de cada linea para facilitar el analisis de la misma
+Parametros: 
+(String) - archivo: Nombre del Archivo
+Devolucion: 
+-Lista: Lista de Lineas
+"""
 def read(archivo):
     with open(archivo, 'r') as file:
         lineas = [line.lstrip() for line in file.readlines()]
     return lineas
+
 
 def separateWords(text): 
     words=[]
@@ -15,8 +24,15 @@ def separateWords(text):
             words.extend(lineWords)
     return words 
 
+"""
+dataIdentifyTypeToNameToValue es un metodo dedicado a la lectura de una linea para
+ detectar el patron especifico: tipo Dato, nombre Dato y valor de dato, y agrupar esos datos de forma individual
+Parametros: 
+(String) - text: linea a estructurar
+Devolucion: 
+- String : tipo de dato, nombre del dato, valor del dato, numero de Operacion de Estructuracion
+"""
 
-# Tipo nombre = valor
 def dataIdentifyTypeToNameToValue(text):# ------------------------------- Operacion 1
     try: 
         patron = r"(\w+)\s+(\w+)\s*=\s*(.+)"
@@ -37,7 +53,15 @@ def dataIdentifyTypeToNameToValue(text):# ------------------------------- Operac
     except Exception: 
         return None
     
-# Tipo nombre 
+
+"""
+dataIdentifyTypeToName es un metodo dedicado a la lectura de una linea para
+ detectar el patron especifico: tipo Dato, nombre Dato, y agrupar esos datos de forma individual
+Parametros: 
+(String) - text: linea a estructurar
+Devolucion: 
+- String : tipo de dato, nombre del dato, numero de Operacion de Estructuracion
+"""
 def dataIdentifyTypeToName(text): # ------------------------------- Operacion 2
     try: 
         if len(text.split()) != 2: 
@@ -51,7 +75,15 @@ def dataIdentifyTypeToName(text): # ------------------------------- Operacion 2
     except Exception:  
         return None  
 
-# nombre = valor
+
+"""
+dataIdentifyNameToValue es un metodo dedicado a la lectura de una linea para
+ detectar el patron especifico: nombre Dato y valor del dato, y agrupar esos datos de forma individual
+Parametros: 
+(String) - text: linea a estructurar
+Devolucion: 
+- String : nombre del dato,valor del dato, numero de Operacion de Estructuracion
+"""
 def dataIdentifyNameToValue(text): # ------------------------------- Operacion 3
     if len(text.split()) >3:
             return None
@@ -67,7 +99,14 @@ def dataIdentifyNameToValue(text): # ------------------------------- Operacion 3
     else:
         return None
 
-# nombre = nombre 
+"""
+dataIdentifyNameToValue es un metodo dedicado a la lectura de una linea para
+ detectar el patron especifico: nombre Dato y valor del dato, y agrupar esos datos de forma individual
+Parametros: 
+(String) - text: linea a estructurar
+Devolucion: 
+- String : nombre del dato,valor del dato, numero de Operacion de Estructuracion
+"""
 def dataIdentifyNameToName(text): # ------------------------------- Operacion 4
     if len(text.split()) > 3:
            return None
@@ -79,7 +118,14 @@ def dataIdentifyNameToName(text): # ------------------------------- Operacion 4
         return nombre1, nombre2, "4"
     else:
         return None
-
+"""
+dataIdentifyWithParenthesis es un metodo dedicado a la lectura de una linea para
+ detectar el patron especifico: tipo de dato, nombre de funcion y parametros, y agrupar esos datos de forma individual
+Parametros: 
+(String) - text: linea a estructurar
+Devolucion: 
+- String : tipo de dato, nombre del dato, parametros, numero de Operacion de Estructuracion
+"""
 #tipo nombreFuncion(parametros) {
 def dataIdentifyWithParenthesis(text): # ------------------------------- Operacion 5
     patron = r"(\w+)\s+(\w+)\s*\(\s*(.*)\s*\)\s*(\{)?"
@@ -96,7 +142,13 @@ def dataIdentifyWithParenthesis(text): # ------------------------------- Operaci
     else:
         return None
 
-#}
+"""
+find_closing_brace es un metodo dedicado a la lectura de una linea para
+ detectar si dentro de esa linea hay una llave de cierre
+(String) - text: linea a leer
+Devolucion: 
+- String : Numero de Operacion de Estructuracion
+"""
 def find_closing_brace(line): # ------------------------------- Operacion 8
     if "}" in line:
         closing_brace_index = line.index("}")
@@ -109,7 +161,7 @@ def find_closing_brace(line): # ------------------------------- Operacion 8
     else:
         return None
 
-# tipo nombre = valor, tipo nombre 
+
 def variablesDeLasFunciones(text): 
     parameters=[]
     line = text
@@ -133,7 +185,15 @@ def variablesDeLasFunciones(text):
                         parameters.append(word)
     return parameters      
 
-# a = operacion (1 + x + 7)
+"""
+dataNametoOperation es un metodo dedicado a la lectura de una linea para
+ detectar el patron especifico: nombre Dato y operaciones, y agrupar esos datos de forma individual
+Parametros: 
+(String) - text: linea a estructurar
+Devolucion: 
+- String : nombre del dato, numero de Operacion de Estructuracion
+- Lista: Lista de los caracteres separadls por una operacion matematica
+"""
 def dataNametoOperation(text): # ------------------------------- Operacion 6
     try:
         patron = r"(\w+)\s*=\s*(([\w.]+(\s*[\+\-\*/]\s*[\w.]+)+))"
@@ -150,7 +210,15 @@ def dataNametoOperation(text): # ------------------------------- Operacion 6
     except Exception:
         return None
     
-# int x = operacion 
+"""
+dataTypeNameToOperation es un metodo dedicado a la lectura de una linea para
+ detectar el patron especifico: tipo de dato, nombre Dato y operaciones, y agrupar esos datos de forma individual
+Parametros: 
+(String) - text: linea a estructurar
+Devolucion: 
+- String : tipo de dato, nombre del dato, numero de Operacion de Estructuracion
+- Lista: Lista de los caracteres separadls por una operacion matematica
+"""
 def dataTypeNameToOperation(text):# ------------------------------- Operacion 9
     try:
         patron = r"(\w+)\s+(\w+)\s*=\s*(([\w.]+(\s*[\+\-\*/]\s*[\w.]+)+))"
@@ -168,7 +236,14 @@ def dataTypeNameToOperation(text):# ------------------------------- Operacion 9
     except Exception:
         return None
 
-#if ( x > y ) falta ==
+"""
+conditionalDetection es un metodo dedicado a la lectura de una linea para
+ detectar el patron especifico: if, valores a comparar, y agrupar esos datos de forma individual
+Parametros: 
+(String) - text: linea a estructurar
+Devolucion: 
+- String : if, valor 1, valor 2, numero de Operacion de Estructuracion
+"""
 def conditionalDetection(text):# ------------------------------- Operacion 10
     try: 
         patron = r"^\s*if\s*\(\s*(\w+)\s*([<>]=?|==|!=)\s*(\w+)\s*\)\s*{?$"
@@ -182,7 +257,14 @@ def conditionalDetection(text):# ------------------------------- Operacion 10
     except Exception: 
         return None 
 
-#while( x > y)  arreglar =  
+"""
+loopDetection es un metodo dedicado a la lectura de una linea para
+ detectar el patron especifico: while, valores a comparar, y agrupar esos datos de forma individual
+Parametros: 
+(String) - text: linea a estructurar
+Devolucion: 
+- String : while, valor 1, valor 2, numero de Operacion de Estructuracion
+"""
 def loopDetection(text): # ------------------------------- Operacion 11
     try:
         patron = r"^\s*while\s*\(\s*(\w+)\s*([<>]=?|==|!=)\s*(\w+)\s*\)\s*{?$"
@@ -196,7 +278,14 @@ def loopDetection(text): # ------------------------------- Operacion 11
     except Exception:
         return None
 
-# int x = suma(x,y,z) arreglar 
+"""
+dataToNameToFunction es un metodo dedicado a la lectura de una linea para
+ detectar el patron especifico: tipo de dato, nombre de dato, nombre de funcion, parametros, y agrupar esos datos de forma individual
+Parametros: 
+(String) - text: linea a estructurar
+Devolucion: 
+- String : tipo de dato, nombre da dato, nombre de funcion, parametros de la funcion, numero de Operacion de Estructuracion
+"""
 def dataToNameToFunction(text): # ------------------------------- Operacion 12
     pattern = r"(\w+)\s+(\w+)\s*=\s*(\w+)\s*\(\s*(.*?)\s*\)"
     match = re.match(pattern, text)
@@ -212,7 +301,14 @@ def dataToNameToFunction(text): # ------------------------------- Operacion 12
     else:
         return None
 
-# x = suma(x,y,z ) terminar de probar 
+"""
+nameToFunction es un metodo dedicado a la lectura de una linea para
+ detectar el patron especifico: nombre de dato, nombre de funcion, parametros de funcion, y agrupar esos datos de forma individual
+Parametros: 
+(String) - text: linea a estructurar
+Devolucion: 
+- String : nombre de dato, nombre de funcion, parametros de funcion, numero de Operacion de Estructuracion
+"""
 def nameToFunction(text): # ------------------------------- Operacion 13
     pattern = r"(\w+)\s*=\s*(\w+)\s*\(\s*(.*?)\s*\)"
     match = re.match(pattern, text)
@@ -223,7 +319,15 @@ def nameToFunction(text): # ------------------------------- Operacion 13
         return variable_name, function_name, params_string, "13"
     else:
         return None
-
+"""
+returnDetect es un metodo dedicado a la lectura de una linea para
+ detectar el patron especifico: return, lista de valores sea un unico valor o una operacion, y agrupar esos datos de forma individual
+Parametros: 
+(String) - text: linea a estructurar
+Devolucion: 
+- String : return, nombre de funcion, numero de Operacion de Estructuracion
+- Lista : Lista de valores sea un unico valor o una operacion
+"""
 def returnDetect(text): # ------------------------------- Operacion 14
     try:
         patron = r"^\s*return\s+(['\"]?\w+['\"]?\s*[\+\-\*/]\s*(['\"]?\w+['\"]?)*)\s*$"
@@ -238,6 +342,3 @@ def returnDetect(text): # ------------------------------- Operacion 14
         return None
     except Exception:
         return None
-
-# ---------------------------------- DATOS Y PRUEBAS LECTURA.PY --------------------------------------
-#print(variablesDeLasFunciones("int 3,int x"))
