@@ -1,11 +1,10 @@
-    
 string prueba = probando
-
+prueba = 22
 void funcion(int w, string x ){
   int p 
 if(x > y) {
   int zzz = 66
   string movido
-  zzz = prueba
+  zzz = "hola"
 }
 }
