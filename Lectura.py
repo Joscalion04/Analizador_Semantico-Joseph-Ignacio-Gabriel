@@ -15,7 +15,14 @@ def read(archivo):
     return lineas
 
 
-
+def separateWords(text): 
+    words=[]
+    lines = text.split('\n')
+    for line in lines:
+        if line != '\n': 
+            lineWords = line.split(' ')
+            words.extend(lineWords)
+    return words 
 
 """
 dataIdentifyTypeToNameToValue es un metodo dedicado a la lectura de una linea para
@@ -119,7 +126,7 @@ Parametros:
 Devolucion: 
 - String : tipo de dato, nombre del dato, parametros, numero de Operacion de Estructuracion
 """
-
+#tipo nombreFuncion(parametros) {
 def dataIdentifyWithParenthesis(text): # ------------------------------- Operacion 5
     patron = r"(\w+)\s+(\w+)\s*\(\s*(.*)\s*\)\s*(\{)?"
     dataType = ""
@@ -138,7 +145,6 @@ def dataIdentifyWithParenthesis(text): # ------------------------------- Operaci
 """
 find_closing_brace es un metodo dedicado a la lectura de una linea para
  detectar si dentro de esa linea hay una llave de cierre
-Parametros:
 (String) - text: linea a leer
 Devolucion: 
 - String : Numero de Operacion de Estructuracion
@@ -155,17 +161,7 @@ def find_closing_brace(line): # ------------------------------- Operacion 8
     else:
         return None
 
-"""
-VariablesDeLasFunciones es un metodo que ingresa la informacion de los datos
-que corresponden a los parametros de una funcion dentro de una lista.
-si text es = int x, y, z=0, el metodo retorna la siguiente lista: [int,x,y,z,0]
 
-Parametros:
--text(string): string con los parametros de una funcion 
-
-Devolucion:
--lista: datos de los parametros de la funcion
-"""
 def variablesDeLasFunciones(text): 
     parameters=[]
     line = text
@@ -249,17 +245,17 @@ Devolucion:
 - String : if, valor 1, valor 2, numero de Operacion de Estructuracion
 """
 def conditionalDetection(text):# ------------------------------- Operacion 10
-    try: 
-        patron = r"^\s*if\s*\(\s*(\w+)\s*([<>]=?|==|!=)\s*(\w+)\s*\)\s*{?$"
-        resultado = re.search(patron, text) 
-        if resultado: 
-            value1 = resultado.group(1) 
-            value2 = resultado.group(3) 
-            return "if", value1, value2,"10" 
-        else: 
-            return None 
-    except Exception: 
-        return None 
+    try:
+        patron = r"^\s*if\s*\(\s*([\d.]+)\s*([<>]=?|==|!=)\s*([\d.]+)\s*\)\s*{?$"
+        resultado = re.search(patron, text)
+        if resultado:
+            value1 = resultado.group(1)
+            value2 = resultado.group(3)
+            return "if", value1, value2, "10"
+        else:
+            return None
+    except Exception:
+        return None
 
 """
 loopDetection es un metodo dedicado a la lectura de una linea para
@@ -271,12 +267,12 @@ Devolucion:
 """
 def loopDetection(text): # ------------------------------- Operacion 11
     try:
-        patron = r"^\s*while\s*\(\s*(\w+)\s*([<>]=?|==|!=)\s*(\w+)\s*\)\s*{?$"
+        patron = r"^\s*while\s*\(\s*([\d.]+)\s*([<>]=?|==|!=)\s*([\d.]+)\s*\)\s*{?$"
         resultado = re.search(patron, text)
         if resultado:
             value1 = resultado.group(1)
             value2 = resultado.group(3)
-            return "while", value1, value2,"11"
+            return "while", value1, value2, "10"
         else:
             return None
     except Exception:
