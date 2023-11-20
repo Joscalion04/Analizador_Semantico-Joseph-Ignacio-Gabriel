@@ -3,6 +3,9 @@ import Lectura
 import Analisis
 
 """
+En caso de no compilar debido a la direccion del Codigo.txt, copiar la dirección relativa del archivo y pegarla en 
+el parametro del metodo Lectura.read(aqui va la direccion) en la linea 877
+
 Limitaciones del proyecto
 
 No verifica los parametros de una funcion cuando esta se llama
@@ -870,7 +873,7 @@ def lectura(linea, num, operacion, function, functionName, conditional):
     return error,operacion, function, functionName, conditional
 
 
-
+#En caso de que falle la direccion del codigo al descargarlo desde github, copiar y pegar la direccion relativa del Codigo.txt
 lineas = Lectura.read("Codigo.txt") 
 numLine = 1 
 operacion = ""
