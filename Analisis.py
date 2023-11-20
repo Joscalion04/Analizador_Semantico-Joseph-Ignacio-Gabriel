@@ -458,7 +458,7 @@ Devolucion:
 """
 def validateReturnValuesFunction(nameFunction, values, numLine):
     for value in values:
-        if KeyInFunction(nameFunction,value):
+        if KeyInFunction(nameFunction,value)==True:
            if TipoValFuncionEnDiccionario(nameFunction,value) != TipoVarEnDiccionario(nameFunction):
               print("Linea " + str(numLine) + " Error: La variable '" + str(value) + "' no es un valor de retorno correcto")
               break
@@ -478,3 +478,5 @@ def validateReturnValuesFunction(nameFunction, values, numLine):
             if TipoVarEnDiccionario(nameFunction) != 'int':
                 print("Linea " + str(numLine) + " Error: La variable '" + str(value) + "' no es un valor de retorno correcto")
                 break 
+        elif validateGeneral(TipoVarEnDiccionario(nameFunction),value)==False:
+            print("Linea " + str(numLine) + " Error: El tipo de dato del return no corresponde al tipo de la funcion")

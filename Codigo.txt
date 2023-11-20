@@ -1,9 +1,10 @@
 x =40
 
 int funcion(float v, string n) {
-  if(v>0.0){
+  if(v>1.5){
+    int y
     n = "Mayor"
     x = x + 5
   }
-  return 10
+  return "problemas"
 } 
