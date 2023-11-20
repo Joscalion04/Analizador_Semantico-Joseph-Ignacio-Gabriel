@@ -48,7 +48,6 @@ def lectura(linea, num, operacion, function, functionName, conditional):
             else:
                 error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"                
     except Exception: 
-      # print("linea sin poder leerse 1")
        pass
 
     try:
@@ -93,7 +92,6 @@ def lectura(linea, num, operacion, function, functionName, conditional):
                 else: 
                     error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
     except Exception: 
-       # print("linea sin poder leerse 2")
         pass  
     
     try:
@@ -128,7 +126,6 @@ def lectura(linea, num, operacion, function, functionName, conditional):
         else:
             error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que no ha sido declarada"
     except Exception:
-        #print("linea sin poder leerse 3")
         pass
 
   #ready if 
@@ -300,7 +297,6 @@ def lectura(linea, num, operacion, function, functionName, conditional):
         else : 
             error = "Linea " + str(num) + " Error: La variable " + str(nombre) + "  no ha sido declarada"    
     except Exception:
-       # print("linea sin poder leerse 4")
         pass
 
     try: 
@@ -315,7 +311,6 @@ def lectura(linea, num, operacion, function, functionName, conditional):
             function=True
             functionName=nombre        
     except Exception:
-        #print("linea sin poder leerse 5")
         pass
     
     if Lectura.find_closing_brace(line) == "8": 
@@ -326,7 +321,6 @@ def lectura(linea, num, operacion, function, functionName, conditional):
             functionName=None
     else: 
         pass
-        #print("linea sin poder leerse 6")
 
     try: 
         nombre, operations, operacion = Lectura.dataNametoOperation(line) 
@@ -348,7 +342,6 @@ def lectura(linea, num, operacion, function, functionName, conditional):
         else:
             error =  "Linea " + str(num) + " Error: "+ nombre + " no es una variable que haya sido declarada"
     except Exception:
-        #print("linea sin poder leerse 7")
         pass
     
     try:
@@ -384,7 +377,6 @@ def lectura(linea, num, operacion, function, functionName, conditional):
                      error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
         Analisis.verificateTypes(tipo, operations, functionName, num)
     except Exception:
-        #print("linea sin poder leerse 8")
         pass
 
     try:
@@ -568,7 +560,6 @@ def lectura(linea, num, operacion, function, functionName, conditional):
             Analisis.addIfFunction(functionName)
             conditional=True
     except Exception:
-        #print("linea sin poder leerse 9")
         pass
 
     try:
@@ -651,10 +642,74 @@ def lectura(linea, num, operacion, function, functionName, conditional):
             Analisis.addWhileFunction(functionName)
         conditional=True
     except Exception: 
-        #print("linea sin poder leerse 10")
         pass
     
+    try: # int x = suma(x,y,z) 
+        tipo, nombre, nombre_Func, params_string , num = Lectura.dataToNameToFunction(linea)
 
+        if function ==True:
+            if Analisis.KeyInFunction(functionName, nombre) == False:
+                if conditional == True:
+                    if Analisis.KeyInFunction(functionName,"if")==True:
+                        if Analisis.keyInIfFunc(functionName, nombre) == False and Analisis.KeyInDiccionario(nombre) == False and Analisis.KeyInFunction(functionName,nombre)==False:
+                            Analisis.addVarIfFun(functionName, nombre, tipo)
+                    elif Analisis.KeyInFunction(functionName,"while")==True:
+                        if Analisis.keyInWhileFunc(functionName, nombre) == False and Analisis.KeyInDiccionario(nombre) == False and Analisis.KeyInFunction(functionName,nombre)==False:
+                            Analisis.addVarWhileFun(functionName,nombre, tipo)
+                    else: 
+                            error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
+                else:
+                    Analisis.addVarFunction(functionName, nombre,tipo)
+            elif Analisis.validateGeneral(tipo,valor) == False: 
+                error = "Linea " + str(num) + " Error: "+ str(valor) + " no es un dato aceptable para una variable de tipo " + str(tipo)
+            if Analisis.KeyInDiccionario(nombre)==False:
+                if conditional == True:
+                    if Analisis.KeyInDiccionario("if")==True:
+                        if Analisis.keyInIfGen(nombre)==False:
+                            Analisis.addVarIfGen(nombre,tipo)
+                        else:
+                          error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
+                    if Analisis.KeyInDiccionario("while")==True:
+                        if Analisis.keyInWhileGen(nombre)==False:
+                            Analisis.addVarWhileGen(nombre,tipo)
+                        else:
+                             error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada"
+                else: 
+                    Analisis.addVariableGen(nombre,tipo)  
+        else:
+            error =  "Linea " + str(num) + " Error: "+ nombre + " es una variable que ya ha sido creada" 
+        if Analisis.KeyInDiccionario(nombre):
+            error  = "Linea " + str(num) + " Error: La variable " + str(nombre) + "  ya ha sido declarada"
+        elif not Analisis.KeyInDiccionario(nombre_Func):
+            error  = "Linea " + str(num) + " Error: La funcion " + str(nombre_Func) + "  no ha sido declarada"
+        elif Analisis.TipoVarEnDiccionario(nombre_Func) == 'void':
+            error  = "Linea " + str(num) + " Error: La funcion " + str(nombre_Func) + "  no retorna un valor"
+        elif Analisis.TipoVarEnDiccionario(nombre_Func) != tipo:
+             error  = "Linea " + str(num) + " Error: La funcion " + str(nombre_Func) + "  retorna un tipo de valor incompatible con '"+nombre+"' "
+        else:
+            error  = "Linea " + str(num) + " Error: El tipo de dato " + str(tipo) + "  no existe"
+    except Exception: 
+        pass
+    
+    try:
+        valores, num = Lectura.returnDetect(linea)
+        Analisis.validateReturnValuesFunction(functionName,valores,num)
+    except Exception:
+        pass
+
+    try: #x = suma(x,y,z ) terminar de probar 
+        nombre, nombre_funcio, params_string, num = Lectura.nameToFunction(linea)
+        if Analisis.KeyInDiccionario(nombre):
+            if not Analisis.KeyInDiccionario(nombre_funcio):
+                error  = "Linea " + str(num) + " Error: La funcion " + str(nombre_funcio) + "  no ha sido declarada"
+            elif Analisis.TipoVarEnDiccionario(nombre_funcio) == 'void':
+                error  = "Linea " + str(num) + " Error: La funcion " + str(nombre_funcio) + "  no retorna un valor"
+            elif Analisis.TipoVarEnDiccionario(nombre_funcio) != Analisis.TipoVarEnDiccionario(nombre):
+                 error  = "Linea " + str(num) + " Error: La funcion " + str(nombre_funcio) + "  retorna un tipo de valor incompatible con '"+nombre+"' "
+        else:
+            error  = "Linea " + str(num) + " Error: La variable '" + str(nombre) + "'  no existe"
+    except Exception:
+        pass
     
     return error,operacion, function, functionName, conditional
 
@@ -674,40 +729,8 @@ for line in lineas:
 print(Analisis.diccionarioGen)
 
 
-try: # int x = suma(x,y,z) 
-        tipo, nombre, nombre_Func, params_string , num = Lectura.dataToNameToFunction(linea)
-        if Analisis.KeyInDiccionario(nombre):
-            error  = "Linea " + str(num) + " Error: La variable " + str(nombre) + "  ya ha sido declarada"
-        elif not Analisis.KeyInDiccionario(nombre_Func):
-            error  = "Linea " + str(num) + " Error: La funcion " + str(nombre_Func) + "  no ha sido declarada"
-        elif Analisis.TipoVarEnDiccionario(nombre_Func) == 'void':
-            error  = "Linea " + str(num) + " Error: La funcion " + str(nombre_Func) + "  no retorna un valor"
-        elif Analisis.TipoVarEnDiccionario(nombre_Func) != tipo:
-             error  = "Linea " + str(num) + " Error: La funcion " + str(nombre_Func) + "  retorna un tipo de valor incompatible con '"+nombre+"' "
-        else:
-            error  = "Linea " + str(num) + " Error: El tipo de dato " + str(tipo) + "  no existe"
-    except Exception: 
-        print("linea sin poder leerse 10")
-        pass
 
-    try: #x = suma(x,y,z ) terminar de probar 
-        nombre, nombre_funcio, params_string, num = Lectura.nameToFunction(linea)
-        if Analisis.KeyInDiccionario(nombre):
-            if not Analisis.KeyInDiccionario(nombre_funcio):
-                error  = "Linea " + str(num) + " Error: La funcion " + str(nombre_funcio) + "  no ha sido declarada"
-            elif Analisis.TipoVarEnDiccionario(nombre_funcio) == 'void':
-                error  = "Linea " + str(num) + " Error: La funcion " + str(nombre_funcio) + "  no retorna un valor"
-            elif Analisis.TipoVarEnDiccionario(nombre_funcio) != Analisis.TipoVarEnDiccionario(nombre):
-                 error  = "Linea " + str(num) + " Error: La funcion " + str(nombre_funcio) + "  retorna un tipo de valor incompatible con '"+nombre+"' "
-        else:
-            error  = "Linea " + str(num) + " Error: La variable '" + str(nombre) + "'  no existe"
-    except Exception:
-        print("linea sin poder leerse 3")
-        pass
 
-    try:
-        valores, num = Lectura.returnDetect(linea)
-        Analisis.validateReturnValuesFunction(functionName,valores,num)
-    except Exception:
-        print("linea sin poder leerse 3")
-        pass
+    
+
+   
