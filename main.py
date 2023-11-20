@@ -394,17 +394,29 @@ def lectura(linea, num, operacion, function, functionName, conditional):
                 if Analisis.TipoVarEnDiccionario(nombre)!= Analisis.TipoVarEnDiccionario(nombre2) :
                     error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
             elif conditional ==True: 
-                if Analisis.keyInIfGen(nombre2) == True :
-                    if Analisis.TipoVarEnDiccionario(nombre) != Analisis.accesIfGenValues(nombre2):
-                        error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                if Analisis.KeyInDiccionario("if"):
+                    if Analisis.keyInIfGen(nombre2) == True :
+                        if Analisis.TipoVarEnDiccionario(nombre) != Analisis.accesIfGenValues(nombre2):
+                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                if Analisis.KeyInDiccionario("while"):
+                    if Analisis.keyInWhileGen(nombre2)==True:
+                        if Analisis.TipoVarEnDiccionario(nombre) != Analisis.accesWhileGenValues(nombre2):
+                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
             elif function ==True:
                     if Analisis.KeyInFunction(functionName, nombre2) == True:
                         if Analisis.TipoVarEnDiccionario(nombre) != Analisis.TipoValFuncionEnDiccionario(functionName,nombre2):
                             error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
                     elif conditional == True:
-                        if Analisis.keyInIfFunc(functionName, nombre2) == True: 
-                            if Analisis.TipoVarEnDiccionario(nombre) != Analisis.accesIfFuncValues(functionName, nombre2): 
-                                error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                        if Analisis.KeyInFunction(functionName, "if"):
+                            if Analisis.keyInIfFunc(functionName, nombre2) == True: 
+                                if Analisis.TipoVarEnDiccionario(nombre) != Analisis.accesIfFuncValues(functionName, nombre2): 
+                                    error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                        elif Analisis.KeyInFunction(functionName,"while"):
+                            if Analisis.keyInWhileFunc(functionName,nombre2)==True:
+                                if Analisis.TipoVarEnDiccionario(nombre) != Analisis.accesWhileFuncValues(functionName, nombre2):
+                                    error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+            elif Analisis.validateGeneral(Analisis.TipoVarEnDiccionario(nombre),nombre2)==False:
+                error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y el valor " + str(nombre2) + " no son compatibles"
             else: 
                 error = "Linea " + str(num) + " Error: La variable " + str(nombre2) + "  no ha sido declarada"
         elif function == True:
@@ -413,50 +425,138 @@ def lectura(linea, num, operacion, function, functionName, conditional):
                     if Analisis.TipoValFuncionEnDiccionario(functionName,nombre) != Analisis.TipoVarEnDiccionario(nombre2):
                         error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
                 elif conditional ==True: 
-                    if Analisis.keyInIfGen(nombre2) == True :
-                        if Analisis.TipoValFuncionEnDiccionario(nombre) != Analisis.accesIfGenValues(nombre2):
-                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                    if Analisis.KeyInDiccionario("if"):
+                        if Analisis.keyInIfGen(nombre2) == True :
+                            if Analisis.TipoValFuncionEnDiccionario(nombre) != Analisis.accesIfGenValues(nombre2):
+                                error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                    if Analisis.KeyInDiccionario("while"):
+                        if Analisis.keyInWhileGen(nombre2) == True :
+                            if Analisis.TipoValFuncionEnDiccionario(nombre) != Analisis.accesWhileGenValues(nombre2):
+                                error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"                
                 elif Analisis.KeyInFunction(functionName, nombre2) == True:
                         if Analisis.TipoValFuncionEnDiccionario(functionName,nombre)!= Analisis.TipoValFuncionEnDiccionario(functionName,nombre2):
                             error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
                 elif conditional ==True: 
-                    if Analisis.keyInIfFunc(functionName, nombre2) == True:
-                        if Analisis.TipoValFuncionEnDiccionario(functionName, nombre) != Analisis.accesIfFuncValues(functionName, nombre2):
-                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                    if Analisis.KeyInFunction(functionName, "if"):
+                        if Analisis.keyInIfFunc(functionName, nombre2) == True:
+                            if Analisis.TipoValFuncionEnDiccionario(functionName, nombre) != Analisis.accesIfFuncValues(functionName, nombre2):
+                                error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                    if Analisis.KeyInFunction(functionName, "while"):
+                        if Analisis.keyInWhileFunc(functionName, nombre2) == True:
+                            if Analisis.TipoValFuncionEnDiccionario(functionName, nombre) != Analisis.accesWhileFuncValues(functionName, nombre2):
+                                error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                elif Analisis.validateGeneral(Analisis.TipoValFuncionEnDiccionario(functionName,nombre),nombre2)==False:
+                    error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y el valor " + str(nombre2) + " no son compatibles"
                 else: 
                     error = "Linea " + str(num) + " Error: La variable " + str(nombre2) + "  no ha sido declarada"
             elif conditional == True: 
-                if Analisis.keyInIfFunc(functionName, nombre) == True:
+                if Analisis.KeyInFunction(functionName,"if"):
+                    if Analisis.keyInIfFunc(functionName, nombre) == True:
+                        if Analisis.KeyInDiccionario(nombre2) == True:
+                            if Analisis.accesIfFuncValues(functionName,nombre) != Analisis.TipoVarEnDiccionario(nombre2):
+                                error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                        elif Analisis.keyInIfGen(nombre2) == True :
+                            if Analisis.accesIfFuncValues(nombre) != Analisis.accesIfGenValues(nombre2):
+                                error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                        elif function ==True:
+                            if Analisis.KeyInFunction(functionName, nombre2) == True:
+                                if Analisis.accesIfFuncValues(functionName,nombre)!= Analisis.TipoValFuncionEnDiccionario(functionName,nombre2):
+                                    error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                            elif conditional==True:
+                                if Analisis.KeyInFunction("if") ==True:
+                                    if Analisis.keyInIfFunc(functionName, nombre2) == True:
+                                        if Analisis.accesIfFuncValues(functionName, nombre) != Analisis.accesIfFuncValues(functionName, nombre2):
+                                         error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                                if Analisis.KeyInFunction("while") ==True:
+                                    if Analisis.keyInWhileFunc(functionName, nombre2) == True:
+                                        if Analisis.accesIfFuncValues(functionName, nombre) != Analisis.accesWhileFuncValues(functionName, nombre2):
+                                         error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"                      
+                        elif Analisis.validateGeneral(Analisis.accesIfFuncValues(functionName,nombre),nombre2)==False:
+                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y el valor " + str(nombre2) + " no son compatibles"
+                        else: 
+                            error = "Linea " + str(num) + " Error: La variable " + str(nombre2) + "  no ha sido declarada"
+                if Analisis.KeyInFunction(functionName,"while"):
+                    if Analisis.keyInWhileFunc(functionName, nombre) == True:
+                        if Analisis.KeyInDiccionario(nombre2) == True:
+                            if Analisis.accesWhileFuncValues(functionName,nombre) != Analisis.TipoVarEnDiccionario(nombre2):
+                                error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                        elif Analisis.keyInIfGen(nombre2) == True :
+                            if Analisis.accesWhileFuncValues(nombre) != Analisis.accesIfGenValues(nombre2):
+                                error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                        elif function ==True:
+                            if Analisis.KeyInFunction(functionName, nombre2) == True:
+                                if Analisis.accesWhileFuncValues(functionName,nombre)!= Analisis.TipoValFuncionEnDiccionario(functionName,nombre2):
+                                    error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                            elif conditional==True:
+                                if Analisis.KeyInFunction("if") ==True:
+                                    if Analisis.keyInIfFunc(functionName, nombre2) == True:
+                                        if Analisis.accesWhileFuncValues(functionName, nombre) != Analisis.accesIfFuncValues(functionName, nombre2):
+                                         error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                                if Analisis.KeyInFunction("while") ==True:
+                                    if Analisis.keyInWhileFunc(functionName, nombre2) == True:
+                                        if Analisis.accesWhileFuncValues(functionName, nombre) != Analisis.accesWhileFuncValues(functionName, nombre2):
+                                         error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"                      
+                        elif Analisis.validateGeneral(Analisis.accesWhileFuncValues(functionName,nombre),nombre2)==False:
+                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y el valor " + str(nombre2) + " no son compatibles"
+                    else: 
+                            error = "Linea " + str(num) + " Error: La variable " + str(nombre2) + "  no ha sido declarada"
+        elif conditional ==True:
+            if Analisis.KeyInDiccionario("if")==True:
+                if Analisis.keyInIfGen(nombre) == True:
                     if Analisis.KeyInDiccionario(nombre2) == True:
-                        if Analisis.accesIfFuncValues(functionName,nombre) != Analisis.TipoVarEnDiccionario(nombre2):
+                        if Analisis.accesIfGenValues(nombre)!= Analisis.TipoVarEnDiccionario(nombre2) :
                             error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
                     elif Analisis.keyInIfGen(nombre2) == True :
-                        if Analisis.accesIfFuncValues(nombre) != Analisis.accesIfGenValues(nombre2):
-                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
-                    elif Analisis.KeyInFunction(functionName, nombre2) == True:
-                        if Analisis.accesIfFuncValues(functionName,nombre)!= Analisis.TipoValFuncionEnDiccionario(functionName,nombre2):
-                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
-                    elif Analisis.keyInIfFunc(functionName, nombre2) == True:
-                        if Analisis.accesIfFuncValues(functionName, nombre) != Analisis.accesIfFuncValues(functionName, nombre2):
-                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
-                    else: 
-                        error = "Linea " + str(num) + " Error: La variable " + str(nombre2) + "  no ha sido declarada"
-        elif Analisis.keyInIfGen(nombre) == True:
-            if Analisis.KeyInDiccionario(nombre2) == True:
-                if Analisis.accesIfGenValues(nombre)!= Analisis.TipoVarEnDiccionario(nombre2) :
-                    error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
-            elif conditional ==True: 
-                if Analisis.keyInIfGen(nombre2) == True :
-                    if Analisis.accesIfGenValues(nombre) != Analisis.accesIfGenValues(nombre2):
-                        error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
-            elif function ==True:
-                    if Analisis.KeyInFunction(functionName, nombre2) == True:
-                        if Analisis.accesIfGenValues(nombre) != Analisis.TipoValFuncionEnDiccionario(functionName,nombre2):
-                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
-                    elif conditional == True:
-                        if Analisis.keyInIfFunc(functionName, nombre2) == True: 
-                            if Analisis.accesIfGenValues(nombre) != Analisis.accesIfFuncValues(functionName, nombre2): 
+                            if Analisis.accesIfGenValues(nombre) != Analisis.accesIfGenValues(nombre2):
                                 error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                    elif Analisis.KeyInDiccionario("while")==True:
+                        if Analisis.keyInWhileGen(nombre) == True:
+                            if Analisis.accesIfGenValues(nombre) != Analisis.accesWhileGenValues(nombre2):
+                                error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                    elif function ==True:
+                        if Analisis.KeyInFunction(functionName, nombre2) == True:
+                            if Analisis.accesIfGenValues(nombre) != Analisis.TipoValFuncionEnDiccionario(functionName,nombre2):
+                                error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                        elif conditional == True:
+                            if Analisis.KeyInFunction("if")==True:
+                                if Analisis.keyInIfFunc(functionName, nombre2) == True: 
+                                    if Analisis.accesIfGenValues(nombre) != Analisis.accesIfFuncValues(functionName, nombre2): 
+                                        error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                            if Analisis.KeyInFunction("while")==True:
+                                if Analisis.keyInWhileFunc(functionName, nombre2) == True: 
+                                    if Analisis.accesIfGenValues(nombre) != Analisis.accesWhileFuncValues(functionName, nombre2): 
+                                        error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                elif Analisis.validateGeneral(Analisis.accesIfGenValues(nombre),nombre2)==False:
+                    error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y el valor " + str(nombre2) + " no son compatibles"
+                else: 
+                    error = "Linea " + str(num) + " Error: La variable " + str(nombre2) + "  no ha sido declarada"
+            elif Analisis.KeyInDiccionario("while")==True:
+                if Analisis.keyInWhileGen(nombre) == True:
+                    if Analisis.KeyInDiccionario(nombre2) == True:
+                        if Analisis.accesIfWhileGenValues(nombre)!= Analisis.TipoVarEnDiccionario(nombre2) :
+                            error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                    elif Analisis.keyInIfGen(nombre2) == True :
+                            if Analisis.accesWhileGenValues(nombre) != Analisis.accesIfGenValues(nombre2):
+                                error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                    elif Analisis.KeyInDiccionario("while")==True:
+                        if Analisis.keyInWhileGen(nombre) == True:
+                            if Analisis.accesWhileGenValues(nombre) != Analisis.accesWhileGenValues(nombre2):
+                                error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                    elif function ==True:
+                        if Analisis.KeyInFunction(functionName, nombre2) == True:
+                            if Analisis.accesWhileGenValues(nombre) != Analisis.TipoValFuncionEnDiccionario(functionName,nombre2):
+                                error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                        elif conditional == True:
+                            if Analisis.KeyInFunction("if")==True:
+                                if Analisis.keyInIfFunc(functionName, nombre2) == True: 
+                                    if Analisis.accesWhileGenValues(nombre) != Analisis.accesIfFuncValues(functionName, nombre2): 
+                                        error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                            if Analisis.KeyInFunction("while")==True:
+                                if Analisis.keyInWhileFunc(functionName, nombre2) == True: 
+                                    if Analisis.accesWhileGenValues(nombre) != Analisis.accesWhileFuncValues(functionName, nombre2): 
+                                        error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y la variable " + str(nombre2) + " no son compatibles"
+                elif Analisis.validateGeneral(Analisis.accesIfGenValues(nombre),nombre2)==False:
+                    error = "Linea " + str(num) + " Error: La variable " + str(nombre) + " y el valor " + str(nombre2) + " no son compatibles"
             else: 
                 error = "Linea " + str(num) + " Error: La variable " + str(nombre2) + "  no ha sido declarada"
         else : 
