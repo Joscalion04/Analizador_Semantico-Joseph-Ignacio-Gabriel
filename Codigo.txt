@@ -1,10 +1,14 @@
 string prueba = probando
 prueba = 22
+int prueba
 void funcion(int w, string x ){
   int p 
-if(x > y) {
+while(x > y) {
   int zzz = 66
   string movido
+  string zzz
+  float probandolo
+  int prueba = 2020
   zzz = "hola"
 }
 }
