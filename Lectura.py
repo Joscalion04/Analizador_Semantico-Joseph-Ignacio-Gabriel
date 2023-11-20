@@ -343,6 +343,3 @@ def returnDetect(text): # ------------------------------- Operacion 14
     except Exception:
         return None
     
-linea = "return a\n"
-val,op = returnDetect(linea)
-print(val)

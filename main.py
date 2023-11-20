@@ -338,18 +338,39 @@ def lectura(linea, num, operacion, function, functionName, conditional):
         if Analisis.KeyInDiccionario(nombre) ==True:
             tipo = Analisis.TipoVarEnDiccionario(nombre)
             Analisis.verificateTypes(tipo, operations, functionName, num)
-        elif conditional == True:
-            if Analisis.keyInIfGen(nombre) ==True:
-                tipo = Analisis.accesIfGenValues(nombre)
-                Analisis.verificateTypes(tipo, operations, functionName, num)
         elif function == True:
             if conditional == True:
-                if Analisis.keyInIfFunc(functionName, nombre) == True:
-                    tipo = Analisis.accesIfFuncValues(functionName, nombre)
-                    Analisis.verificateTypes(tipo, operations, functionName, num)
+                if Analisis.KeyInFunction(functionName, "if"):
+                    if Analisis.keyInIfFunc(functionName, nombre) == True:
+                        tipo = Analisis.accesIfFuncValues(functionName, nombre)
+                        Analisis.verificateTypes(tipo, operations, functionName, num)
+                    else: 
+                     error = "Linea " + str(num) + " Error: La variable " + str(nombre2) + "  no ha sido declarada"
+                elif Analisis.KeyInFunction(functionName, "while"):
+                    if Analisis.keyInWhileFunc(functionName, nombre) == True:
+                        tipo = Analisis.accesWhileFuncValues(functionName, nombre)
+                        Analisis.verificateTypes(tipo, operations, functionName, num) 
+                    else: 
+                     error = "Linea " + str(num) + " Error: La variable " + str(nombre2) + "  no ha sido declarada"
+                else: 
+                     error = "Linea " + str(num) + " Error: La variable " + str(nombre2) + "  no ha sido declarada"
             elif Analisis.KeyInFunction(functionName, nombre):
                 tipo = Analisis.TipoValFuncionEnDiccionario(functionName, nombre)
                 Analisis.verificateTypes(tipo, operations, functionName, num)
+        elif conditional == True:
+            if Analisis.KeyInDiccionario("if"):
+                if Analisis.keyInIfGen(nombre) ==True:
+                    tipo = Analisis.accesIfGenValues(nombre)
+                    Analisis.verificateTypes(tipo, operations, functionName, num)
+                else: 
+                     error = "Linea " + str(num) + " Error: La variable " + str(nombre2) + "  no ha sido declarada"
+            if Analisis.KeyInDiccionario("while"):
+                if Analisis.keyInWhileGen(nombre) ==True:
+                    tipo = Analisis.accesWhileGenValues(nombre)
+                    Analisis.verificateTypes(tipo, operations, functionName, num)
+                else: 
+                     error = "Linea " + str(num) + " Error: La variable " + str(nombre2) + "  no ha sido declarada"
+        
         else:
             error =  "Linea " + str(num) + " Error: "+ nombre + " no es una variable que haya sido declarada"
     except Exception:
