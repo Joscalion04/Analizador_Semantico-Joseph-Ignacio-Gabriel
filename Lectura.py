@@ -246,11 +246,11 @@ Devolucion:
 """
 def conditionalDetection(text):# ------------------------------- Operacion 10
     try:
-        patron = r"^\s*if\s*\(\s*([\d.]+)\s*([<>]=?|==|!=)\s*([\d.]+)\s*\)\s*{?$"
+        patron = r"^\s*if\s*\(\s*(['\"]?[a-zA-Z\d.]+['\"]?)\s*([<>]=?|==|!=)\s*(['\"]?[a-zA-Z\d.]+['\"]?)\s*\)\s*{?$"
         resultado = re.search(patron, text)
         if resultado:
-            value1 = resultado.group(1)
-            value2 = resultado.group(3)
+            value1 = resultado.group(1).strip('\'"')
+            value2 = resultado.group(3).strip('\'"')
             return "if", value1, value2, "10"
         else:
             return None
@@ -267,12 +267,12 @@ Devolucion:
 """
 def loopDetection(text): # ------------------------------- Operacion 11
     try:
-        patron = r"^\s*while\s*\(\s*([\d.]+)\s*([<>]=?|==|!=)\s*([\d.]+)\s*\)\s*{?$"
+        patron = r"^\s*while\s*\(\s*(['\"]?[a-zA-Z\d.]+['\"]?)\s*([<>]=?|==|!=)\s*(['\"]?[a-zA-Z\d.]+['\"]?)\s*\)\s*{?$"
         resultado = re.search(patron, text)
         if resultado:
             value1 = resultado.group(1)
             value2 = resultado.group(3)
-            return "while", value1, value2, "10"
+            return "while", value1, value2, "11"
         else:
             return None
     except Exception:
