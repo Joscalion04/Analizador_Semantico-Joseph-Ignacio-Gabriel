@@ -64,8 +64,8 @@ Metodo que utilizando los metodos validateInt, validateFloat, validateString val
 corresponde con el tipo, tanto el valor como el tipo entran como parametro
 
 Parametros: 
--tipo: tipo de dato de una variable o tipo de retorno de una funcion
--valor: valor que se desea validar
+-tipo(string): tipo de dato de una variable o tipo de retorno de una funcion
+-valor(string): valor que se desea validar
 Devolucion: 
 boolean: true-> el tipo de dato es correcto para el valor , false-> el tipo de dato no es correcto para el valor 
 """
@@ -153,8 +153,8 @@ def verificationTypeVar(type, name, functionName, linenum):
 """
 addVariableGen, addFunctionGen, son metodos para agregar variables o funciones al diccionario General
 Parametros: 
--name: nombre de la variable 
--type: tipo de la variable 
+-name(string): nombre de la variable 
+-type(string): tipo de la variable 
 
 Devolucion: 
 -None
@@ -184,9 +184,9 @@ def addWhileGen():
 """
 addVarFunction metodo para agregar variables a funciones
 Parametros: 
--nameFun: nombre de la funcion donde se quiere ingresar la variable
--name: nombre de la variable 
--type: tipo de la variable 
+-nameFun(string): nombre de la funcion donde se quiere ingresar la variable
+-nameVar(string): nombre de la variable 
+-type(string): tipo de la variable 
 
 Devolucion: 
 -None
@@ -197,7 +197,7 @@ def addVarFunction(nameFun, nameVar, type):
 """
 metodo para agregar if a funciones
 Parametros: 
--nameFun: nombre de la funcion donde se quiere ingresar la variable
+-nameFun(string): nombre de la funcion donde se quiere ingresar la variable
 Devolucion: 
 -None
 """
@@ -208,7 +208,7 @@ def addIfFunction(nameFun):
 """
 metodo para agregar while a funciones
 Parametros: 
--nameFun: nombre de la funcion donde se quiere ingresar la variable
+-nameFun(string): nombre de la funcion donde se quiere ingresar la variable
 Devolucion: 
 -None
 """
@@ -218,8 +218,8 @@ def addWhileFunction(nameFun):
 """
  addVarIfGen y addVarWhileGen son metodos para agregar variables a los if o while que no se encuentren dentor de una funcion
 Parametros: 
--name: nombre de la variable 
--type: tipo de la variable 
+-name(string): nombre de la variable 
+-type(string): tipo de la variable 
 Devolucion: 
 -None
 """
@@ -231,9 +231,9 @@ def addVarWhileGen(var,type):
 """
  addVarIfFun y addVarWhileFun son metodos para agregar variables a los if o while que se encuentren dentor de una funcion
 Parametros: 
--nameFun: nombre de la función donde se encuentra el if o while
--name: nombre de la variable 
--type: tipo de la variable 
+-nameFun(string): nombre de la función donde se encuentra el if o while
+-name(string): nombre de la variable 
+-type(string): tipo de la variable 
 Devolucion: 
 -None
 """
@@ -247,7 +247,7 @@ def addVarWhileFun(funName,var,type):
 """
  accesIfGenValues y accesWhileGenValues son metodos para acceder al tipo de una variable de un if o while que no se encuentren dentor de una funcion
 Parametros: 
--var: nombre de la variable 
+-var(string): nombre de la variable 
 Devolucion: 
 -None
 """
@@ -257,9 +257,10 @@ def accesWhileGenValues(var):
     return diccionarioGen["while"][var]
 
 """
- accesIfFuncValues y accesWhileFuncValues son metodos para acceder al tipo de una variable de un if o while que no se encuentren dentor de una funcion
+ accesIfFuncValues y accesWhileFuncValues son metodos para acceder al tipo de una variable de un if o while que se encuentren dentor de una funcion
 Parametros: 
--var: nombre de la variable 
+-funName(string): Nombre de la funcion donde se encuentra el if o el while
+-var(string): nombre de la variable 
 Devolucion: 
 -None
 """
@@ -269,11 +270,23 @@ def accesIfFuncValues(funName,var):
 def accesWhileFuncValues(funName,var):
     return diccionarioGen[funName][2]["while"][var]
 
-#Metodo para añadir el tipo del return de una funcion
+"""
+ Metodo para agregar el tipo de return de una funcion
+Parametros: 
+-funName(string): Nombre de la funcion
+Devolucion: 
+-None
+"""
 def addReturnVal(nameFun): 
     diccionarioGen[nameFun][2]["return"]= (diccionarioGen[nameFun][1])
 
-#Metodo para verificar si una variable global o funcion esta en el diccionario
+"""
+ metodo que verifica si una variable global o funcion existe 
+Parametros: 
+-word(string): Nombre de la funcion o varable
+Devolucion: 
+-boolean: True->Existe, False->No existe
+"""
 def KeyInDiccionario(word):
     if word in diccionarioGen:
         return True
@@ -292,48 +305,78 @@ def AllSearch(word):
                 return True
     return False                
 
-#Metodo que verifica que una llave (nombre de una variable) este en una funcion
+"""
+ metodo que verifica si una variable esta en una funcion 
+Parametros: 
+-key(string): Nombre de la funcion o varable
+-funName(string): Nombre de la funcion
+Devolucion: 
+-boolean: True->Existe, False->No existe
+"""
 def KeyInFunction(funName, key):
     if key in diccionarioGen[funName][2]:
         return True
     else:
         return False
 
-#Metodo que verifica que una llave (nombre de una variable) este en un If
+"""
+keyInIfGen y keyInWhileGen son metodos que verifican si una variable esta en un If o while que no 
+se encuentra dentro de una funcion  
+Parametros: 
+-key(string): Nombre de la varable
+Devolucion: 
+-boolean: True->Existe, False->No existe
+"""
 def keyInIfGen(key):
     if key in diccionarioGen["if"]:
        return True
     else:
         return False       
     
-#Metodo que verifica que una llave (nombre de una variable) este en un while  
+
 def keyInWhileGen(key):
     if key in diccionarioGen["while"]:
         return True
     else:
         return False
 
-#Metodo que verifica que una llave (nombre de una variable) este en un If que esta dentro de 
-# una funcion
+"""
+keyInIfGen y keyInWhileGen son metodos que verifican si una variable esta en un If o while que 
+se encuentra dentro de una funcion  
+Parametros: 
+-key(string): Nombre de la varable
+Devolucion: 
+-boolean: True->Existe, False->No existe
+"""
 def keyInIfFunc(funName,key):
     if key in diccionarioGen[funName][2]["if"]:
         return True
     else:
         return False
 
-#Metodo que verifica que una llave (nombre de una variable) este en un While que esta dentro de 
-#una funcion
+
 def keyInWhileFunc(funName,key):
     if key in diccionarioGen[funName][2]["while"]:
         return True
     else:
         return False
 
-#Metodo que devuelve el tipo de una variable
+"""
+Metodo que retorna el tipo de una variable global 
+Parametros: 
+-key(string): Nombre de la varable
+Devolucion: 
+-string: tipo de la variable
+"""
 def TipoVarEnDiccionario(key):
     return  diccionarioGen[key][1]
-
-#Metodo que devuelve el tipo de una variable que esta dentro de una funncion
+"""
+Metodo que devuelve el tipo de una variable que esta dentro de una funncion 
+Parametros: 
+-key(string): Nombre de la varable
+Devolucion: 
+-string: tipo de la variable
+"""
 def TipoValFuncionEnDiccionario(funName,key):
     return diccionarioGen[funName][2][key]
 
