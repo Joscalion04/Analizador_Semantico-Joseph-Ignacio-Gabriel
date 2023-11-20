@@ -113,9 +113,8 @@ def find_closing_brace(line): # ------------------------------- Operacion 8
 def variablesDeLasFunciones(text): 
     parameters=[]
     line = text
-    line=line.replace(",",'')
-    lines = text.split('\n')
-    lineWords = line.split(' ')
+    
+    lineWords =  re.split('\s*,\s*|\s+', line)
     word=""
     for line in lineWords:  
             word=line
@@ -241,3 +240,4 @@ def returnDetect(text): # ------------------------------- Operacion 14
         return None
 
 # ---------------------------------- DATOS Y PRUEBAS LECTURA.PY --------------------------------------
+#print(variablesDeLasFunciones("int 3,int x"))
