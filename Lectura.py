@@ -330,15 +330,19 @@ Devolucion:
 """
 def returnDetect(text): # ------------------------------- Operacion 14
     try:
-        patron = r"^\s*return\s+(['\"]?\w+['\"]?\s*[\+\-\*/]\s*(['\"]?\w+['\"]?)*)\s*$"
+        patron = r"^\s*return\s+(['\"]?\w+['\"]?(\s*[\+\-\*/]\s*['\"]?\w+['\"]?)*)\s*$"
         resultado = re.search(patron, text)
         if resultado:
             expresion = resultado.group(1)
             # Verificar que no haya palabras antes o después del return y que los valores estén separados por operadores
             if re.match(r"^['\"]?\w+['\"]?(\s*[\+\-\*/]\s*['\"]?\w+['\"]?)*$", expresion):
                 # Eliminar espacios en blanco de cada elemento antes de agregarlo a la lista
-                valores = [valor.strip() for valor in re.split(r'[\+\-\*/]', expresion)]
+                valores = [valor.strip('\'"') for valor in re.findall(r'\b\w+\b', expresion)]
                 return valores, "14"
         return None
     except Exception:
         return None
+    
+linea = "return a\n"
+val,op = returnDetect(linea)
+print(val)
