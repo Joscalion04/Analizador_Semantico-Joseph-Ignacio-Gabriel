@@ -5,9 +5,16 @@ tiposDatos = {'int' :(), 'float':(), 'string': (), 'void':() }
 #Diccionario General 
 diccionarioGen = {}
 
+"""
+Metodos encargados de verificar si un tipo es 
+permitido o no, esto haciendo uso del diccionario tiposDatos
 
-#Metodos encargados de verificar si un tipo es 
-#permitido o no, esto haciendo uso del diccionario tiposDatos
+Parametros: 
+-word(string): tipo de dato de una variable o tipo de retorno de una funcion
+
+Devolucion: 
+boolean: true-> el tipo es permitido, false-> el tipo no es permitido
+"""
 def isTipo(word):
     if word in tiposDatos:
         return True
@@ -20,7 +27,15 @@ def isTipoVar(word):
     else:
         return False
 
-#Validates de los tipos de variable permitidas (int, float, string)
+"""
+Validaciones  para los tipos de variables permitidas
+
+Parametros: 
+-value (string): valor que se desea validar
+
+Devolucion: 
+-boolean: true-> el valor corresponde con el tipo , false-> el valor no corresponde con el tipo 
+"""
 def validateInt(value): 
     try: 
         int(value)
@@ -44,6 +59,16 @@ def validateString(word):
     else:
         return False
 
+"""
+Metodo que utilizando los metodos validateInt, validateFloat, validateString valida que el valor 
+corresponde con el tipo, tanto el valor como el tipo entran como parametro
+
+Parametros: 
+-tipo: tipo de dato de una variable o tipo de retorno de una funcion
+-valor: valor que se desea validar
+Devolucion: 
+boolean: true-> el tipo de dato es correcto para el valor , false-> el tipo de dato no es correcto para el valor 
+"""
 def validateGeneral(tipo, valor):
     if tipo == "int": 
         return validateInt(valor)
@@ -54,19 +79,37 @@ def validateGeneral(tipo, valor):
     else:
         return False
 
+"""
+Funcion que con ayuda de la funcion verificationTypeVar y en base a una lista de variables o valores
+verifica que todos los datos del vector sean de un mismo tipo previamente declarado
+Parametros: 
+-type (string): tipo de dato usado como criterio para verificar 
+-operations (lista): lista con los valores o variables a comparar 
+-functionName(string o null): nombre de posible funcion
+-lineNum(int): numero de linea que se esta procesando
 
-#Funcion que con ayuda de la funcion verificationTypeVar y en 
-# base a un vector de nombres o valores
-#verifica que todos los datos del vector sean de un mismo 
-# tipo previamente declarado
+Devolucion: 
+string o none: imprime el error que detecto o no imprime nada si no hay error 
+"""
 def verificateTypes(type, operations, functionName, lineNum):
     for operation in operations:
         if verificationTypeVar(type,operation,functionName, lineNum) == 3:
             if validateGeneral(type, operation) == False:
                 print("Linea " + str(lineNum) + " Error: La variable " + str(operation) + " no es un valor valido")
 
-#Verifica que el tipo de la variable es correcto, en caso de no ser una variable retorna un 3 para 
-# que el metodo verificateTypes verifique el tipo del valor 
+
+"""
+Funcion que verifica el tipo de una variable sea correcto 
+Parametros: 
+-type (string): tipo de dato usado como criterio para verificar 
+-name(string): nombre de la variable que se desea verificar
+-functionName(string o null): nombre de posible funcion
+-lineNum(int): numero de linea que se esta procesando
+
+Devolucion: 
+string o int : imprime el error que detecto o retorna un 3 para que la funcion verificateTypes
+verifique el dato como un valor y no como una variable
+"""
 def verificationTypeVar(type, name, functionName, linenum): 
     if KeyInDiccionario(name): 
         if type != TipoVarEnDiccionario(name):
@@ -107,13 +150,29 @@ def verificationTypeVar(type, name, functionName, linenum):
     else: 
         return 3        
 
-#Metodos para agregar datos al diccionario General
+"""
+addVariableGen, addFunctionGen, son metodos para agregar variables o funciones al diccionario General
+Parametros: 
+-name: nombre de la variable 
+-type: tipo de la variable 
+
+Devolucion: 
+-None
+"""
 def addVariableGen(name,type): 
     diccionarioGen[name]= ("var",type)
 # [0] es para "var", [1] para el tipo de variable
 def addFunctionGen(name,type): 
     diccionarioGen[name] = ("fun",type, {})
 #[0] es para "fun", [1] para tipo de funcion, [2] para subdiccionario donde se almacenan variables locales
+"""
+ addIfGen, addWhileGen, son metodos para agregar if o while al diccionario General
+Parametros: 
+-None
+
+Devolucion: 
+-None
+"""
 def addIfGen():
     diccionarioGen["if"]=({})
 #[0] es para subdiccionario
@@ -122,23 +181,62 @@ def addWhileGen():
     diccionarioGen["while"]=({})
 #[0] es para subdiccionario
 
-#Metodos para agregar datos a una funcion
+"""
+addVarFunction metodo para agregar variables a funciones
+Parametros: 
+-nameFun: nombre de la funcion donde se quiere ingresar la variable
+-name: nombre de la variable 
+-type: tipo de la variable 
+
+Devolucion: 
+-None
+"""
 def addVarFunction(nameFun, nameVar, type): 
     diccionarioGen[nameFun][2][nameVar]= (type)
 
-
+"""
+metodo para agregar if a funciones
+Parametros: 
+-nameFun: nombre de la funcion donde se quiere ingresar la variable
+Devolucion: 
+-None
+"""
 def addIfFunction(nameFun):
     diccionarioGen[nameFun][2]["if"]=({})
+
+
+"""
+metodo para agregar while a funciones
+Parametros: 
+-nameFun: nombre de la funcion donde se quiere ingresar la variable
+Devolucion: 
+-None
+"""
 def addWhileFunction(nameFun):
     diccionarioGen[nameFun][2]["while"]=({})
 
-#Metodos para agregar datos a los if o while que NO esten en una funcion
+"""
+ addVarIfGen y addVarWhileGen son metodos para agregar variables a los if o while que no se encuentren dentor de una funcion
+Parametros: 
+-name: nombre de la variable 
+-type: tipo de la variable 
+Devolucion: 
+-None
+"""
 def addVarIfGen(var,type):
     diccionarioGen["if"][var]=(type)
 def addVarWhileGen(var,type):
     diccionarioGen["while"][var]=(type)
 
-#Metodos para agregar datos a los if o while que estan en una funcion
+"""
+ addVarIfFun y addVarWhileFun son metodos para agregar variables a los if o while que se encuentren dentor de una funcion
+Parametros: 
+-nameFun: nombre de la función donde se encuentra el if o while
+-name: nombre de la variable 
+-type: tipo de la variable 
+Devolucion: 
+-None
+"""
 def addVarIfFun(funName,var,type):
     diccionarioGen[funName][2]["if"][var]=(type)
 
@@ -146,13 +244,25 @@ def addVarWhileFun(funName,var,type):
     diccionarioGen[funName][2]["while"][var]=(type)
 
 
-#Accesos a valores if o while 
+"""
+ accesIfGenValues y accesWhileGenValues son metodos para acceder al tipo de una variable de un if o while que no se encuentren dentor de una funcion
+Parametros: 
+-var: nombre de la variable 
+Devolucion: 
+-None
+"""
 def accesIfGenValues(var):
     return diccionarioGen["if"][var]
 def accesWhileGenValues(var):
     return diccionarioGen["while"][var]
 
-#Accesos a valores de una variable dentro de una funcion y un if o while
+"""
+ accesIfFuncValues y accesWhileFuncValues son metodos para acceder al tipo de una variable de un if o while que no se encuentren dentor de una funcion
+Parametros: 
+-var: nombre de la variable 
+Devolucion: 
+-None
+"""
 def accesIfFuncValues(funName,var):
     return diccionarioGen[funName][2]["if"][var]
 
